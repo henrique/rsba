@@ -1,7 +1,10 @@
 language: cpp
 
 before_install:
- - sudo apt-get install -qq libatlas-base-dev libeigen3-dev libsuitesparse-dev
+ - sudo add-apt-repository --yes ppa:xqms/opencv-nonfree
+ - sudo apt-get update
+ - sudo apt-get install -qq libopencv-nonfree-dev libopencv-video-dev libopencv-features2d-dev libopencv-calib3d-dev libopencv-photo-dev libopencv-objdetect-dev libopencv-contrib-dev
+ - sudo apt-get install -qq libatlas-base-dev libeigen3-dev libsuitesparse-dev libgtest-dev
  
 
 install:
@@ -42,4 +45,11 @@ install:
  - cd ..
 
  - cd ..
+
+
+script:
+ -  mkdir build && cd build
+ -  cmake -D CMAKE_BUILD_TYPE=Release ..
+ -  make -j2
+ -  make test
 
