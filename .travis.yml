@@ -1,7 +1,7 @@
 language: cpp
 
 before_install:
- - sudo apt-get install -qq libatlas-base-dev libeigen3-dev libsuitesparse-dev libgtest-dev libopencv-dev
+ - sudo apt-get install -qq libatlas-base-dev libeigen3-dev libsuitesparse-dev libgtest-dev libopencv-[^g]*-dev
 # libgoogle-glog-dev libgflags-dev
 
 install:
