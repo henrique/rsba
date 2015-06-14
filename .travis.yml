@@ -34,9 +34,8 @@ install:
 # install ceres
  - curl http://ceres-solver.org/ceres-solver-1.9.0.tar.gz | tar xvz
  - mkdir ceres-bin && cd ceres-bin
- - cmake ../ceres-solver-1.9.0
+ - cmake -D BUILD_TESTING=off ../ceres-solver-1.9.0
  - make -j2
-# - make test
  - sudo make install
  - cd ..
  
@@ -45,7 +44,7 @@ install:
 # - curl http://archive.apache.org/dist/thrift/0.9.2/thrift-0.9.2.tar.gz | tar zx 
 # - cd thrift-0.9.2/
  - git clone https://github.com/apache/thrift.git
- - cd thrift/
+ - cd thrift/; sh bootstrap.sh
  - sh configure --without-csharp --without-java --without-erlang --without-nodejs --without-lua --without-python --without-perl --without-php --without-php-extension --without-ruby --without-go --without-d --without-haskell
  - make -j2 -C compiler/cpp
  - make -j2 -C lib/cpp
