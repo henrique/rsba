@@ -9,6 +9,8 @@ compiler:
 
 
 install:
+ - sudo apt-add-repository "deb http://archive.ubuntu.com/ubuntu/ trusty main restricted" -y
+ - sudo apt-get update -qq
  - sudo apt-get install -qq cmake clang g++ libboost-dev libboost-test-dev libboost-program-options-dev libboost-system-dev libboost-filesystem-dev libevent-dev libtool flex bison pkg-config libssl-dev
  - sudo apt-get install -qq tree libatlas-base-dev libeigen3-dev libsuitesparse-dev libgtest-dev
 # libgoogle-glog-dev libgflags-dev
