@@ -11,6 +11,7 @@ install:
  - sudo apt-get install -qq libopencv-dev
  - sudo apt-get install -qq clang libatlas-base-dev libeigen3-dev libsuitesparse-dev libgtest-dev
 # libgoogle-glog-dev libgflags-dev
+ - "cd /usr/src/gtest && sudo cmake . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -"
 
 
  - mkdir thirdparty && cd thirdparty
