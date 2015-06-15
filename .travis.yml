@@ -36,7 +36,7 @@ install:
 # install ceres
  - curl http://ceres-solver.org/ceres-solver-1.9.0.tar.gz | tar xvz
  - mkdir ceres-bin && cd ceres-bin
- - cmake -D BUILD_TESTING=off ../ceres-solver-1.9.0
+ - cmake -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF ../ceres-solver-1.9.0
  - make -j2
  - sudo make install
  - cd ..
@@ -62,8 +62,8 @@ install:
 #install openCV
  - sudo add-apt-repository "deb http://ppa.launchpad.net/xqms/opencv-nonfree/ubuntu trusty main" -y
  - sudo apt-get update -qq
- - sudo apt-get install -qq sudo apt-get install -qq libopencv-nonfree-dev libopencv-video-dev licalib3d-dev libopencv-photo-dev libopencv-objdetect-dev libopencv-contrib-dev
- 
+ - sudo apt-get install -qq libopencv-nonfree-dev libopencv-video-dev libopencv-features2d-dev libopencv-calib3d-dev libopencv-photo-dev libopencv-objdetect-dev libopencv-contrib-dev
+
 
 
 
