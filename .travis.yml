@@ -13,6 +13,12 @@ install:
 # libgoogle-glog-dev libgflags-dev
  - $CXX --version; $CC --version
  - "cd /usr/src/gtest && sudo cmake . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -"
+ - sudo ln -s /usr/include/eigen3/Eigen/ /usr/include/Eigen
+
+#install openCV
+ - sudo add-apt-repository "deb http://ppa.launchpad.net/alexei.colin/opencv/ubuntu precise main" -y
+ - sudo apt-get update -qq
+ - sudo apt-get install -qq libopencv-dev libopencv-nonfree-dev
 
 
  - mkdir thirdparty && cd thirdparty
@@ -58,12 +64,6 @@ install:
  - cd ../..
 
  - cd ..
-
-#install openCV
- - sudo add-apt-repository "deb http://ppa.launchpad.net/xqms/opencv-nonfree/ubuntu trusty main" -y
- - sudo apt-get update -qq
- - sudo apt-get install -qq libopencv-nonfree-dev libopencv-video-dev libopencv-features2d-dev libopencv-calib3d-dev libopencv-photo-dev libopencv-objdetect-dev libopencv-contrib-dev
-
 
 
 
