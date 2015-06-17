@@ -16,7 +16,7 @@
 
 namespace vision {
 
-class SfmOptions;
+struct SfmOptions;
 
 
 class VideoSfMClient: public sfm::Session
