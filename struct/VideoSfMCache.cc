@@ -32,12 +32,12 @@ using namespace ::vision::sfm;
 
 
 VideoSfMCache::VideoSfMCache(const std::string& folder, const std::string& prefix)
-: folder(folder), prefix(prefix), src(src), filename(folder + prefix)
+: folder(folder), prefix(prefix), filename(folder + prefix)
 {
 }
 
 VideoSfMCache::VideoSfMCache(const std::string& folder, const std::string& prefix, const cv::Mat& src)
-: folder(folder), prefix(prefix), src(src), filename(folder + prefix + str2md5(Mat2str(src)))
+: folder(folder), prefix(prefix), filename(folder + prefix + str2md5(Mat2str(src)))
 {
 }
 

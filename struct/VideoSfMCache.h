@@ -42,7 +42,6 @@ protected:
 
   const std::string folder;
   const std::string prefix;
-  const cv::Mat& src;
   const std::string filename;
 };
 
