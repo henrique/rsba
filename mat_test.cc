@@ -232,7 +232,7 @@ TEST(SfM, reprojection) {
             double cRef[3], dRef[3], tri[3];
             w2c(poseRef, pt[j], cRef);
             if (c2direction(poseRef, cRef, dRef)) {
-              double p2[3], len[2];
+              double p2[3], len[3];
               minus3(poseRef+3, pose[i]+3, p2);
               CHECK(ray_intersect(p2, d1, dRef, len)); //never parallel
 
