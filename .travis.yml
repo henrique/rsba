@@ -7,12 +7,17 @@ compiler:
   - gcc
   - clang
 
+env:
+  - CM_ENV="-DCMAKE_BUILD_TYPE=Debug"
+  - CM_ENV="-DCMAKE_BUILD_TYPE=RelWithDebInfo"
+  - CM_ENV="-DCMAKE_BUILD_TYPE=Release"
+
 
 install:
  - sudo apt-get install -qq cmake clang g++ libatlas-base-dev libeigen3-dev libsuitesparse-dev libgtest-dev
 # libgoogle-glog-dev libgflags-dev
  - $CXX --version; $CC --version
- - "cd /usr/src/gtest && sudo cmake . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -"
+ - "cd /usr/src/gtest && sudo cmake $CM_ENV . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -"
  - sudo ln -s /usr/include/eigen3/Eigen/ /usr/include/Eigen
 
 #install openCV
@@ -42,7 +47,7 @@ install:
 # install ceres
  - curl http://ceres-solver.org/ceres-solver-1.9.0.tar.gz | tar xvz
  - mkdir ceres-bin && cd ceres-bin
- - cmake -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF ../ceres-solver-1.9.0
+ - cmake -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF $CM_ENV ../ceres-solver-1.9.0
  - make -j2
  - sudo make install
  - cd ..
@@ -58,7 +63,7 @@ install:
  - git clone https://github.com/apache/thrift.git
  - cd thrift/;
  - mkdir cmake_build && cd cmake_build
- - cmake -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF -DBUILD_C_GLIB=OFF -DBUILD_JAVA=OFF -DBUILD_PYTHON=OFF ..
+ - cmake -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF -DBUILD_C_GLIB=OFF -DBUILD_JAVA=OFF -DBUILD_PYTHON=OFF $CM_ENV ..
  - make -j2
  - sudo make install
  - cd ../..
@@ -69,7 +74,7 @@ install:
 
 script:
  -  mkdir build && cd build
- -  cmake -D CMAKE_BUILD_TYPE=Release ..
+ -  cmake $CM_ENV ..
  -  make -j2
  -  make test
 
