@@ -9,6 +9,9 @@ using Vector = Eigen::Matrix<T, N, 1>;
 template <class T, size_t N>
 using VectorRef = Eigen::Map< Eigen::Matrix<T, N, 1> >;
 
+template <size_t N>
+using VectorDRef = Eigen::Map< Eigen::Matrix<double, N, 1> >;
+
 template <class T>
 using Vector2 = Vector<T, 2>;
 

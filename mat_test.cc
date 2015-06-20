@@ -216,33 +216,49 @@ TEST(SfM, reprojection) {
   for (short i = 0; i < 11; i++) {
     for (short j = 0; j < 18; j++) {
       for (short k = 0; k < 6; k++) {
+        //cout << endl << "i" << i << " j" << j << " k" << j << endl;
+        //cout << "pose[i] " << VectorDRef<NUM_POSE_PARAMS>(pose[i]).transpose() << endl;
+        //cout << "pt[j] " << Vector3dRef(pt[j]).transpose() << endl;
+        //cout << "cam[k] " << VectorDRef<NUM_CAM_PARAMS>(cam[k]).transpose() << endl;
+
         double c3[3], w3[3];
         w2c(pose[i], pt[j], c3);
+        //cout << "c3 " << Vector3dRef(c3).transpose() << endl;
         c2w(pose[i], c3, w3);
+        //cout << "w3 " << Vector3dRef(w3).transpose() << endl;
         CHECK_LE(dist3(pt[j], w3), 1e-6);
 
-        double d1[3],d2[3], d3[3];
+        double d1[3], d2[3], d3[3];
         if (direction(pose[i], pt[j], d1) and c2direction(pose[i], c3, d2)) {
+          //cout << "d1 " << Vector3dRef(d1).transpose() << endl;
+          //cout << "d2 " << Vector3dRef(d2).transpose() << endl;
           CHECK_LE(dist3(d1, d2), 1e-6);
 
           double img[2];
           if (w2i(cam[k], pose[i], pt[j], img) and direction(cam[k], pose[i], img, d3)) {
+            //cout << "img " << Vector2dRef(img).transpose() << endl;
+            //cout << "d3 "  << Vector3dRef(d3).transpose() << endl;
             CHECK_LE(dist3(d1, d3), 1e-1); // very imprecise!!
 
             double cRef[3], dRef[3], tri[3];
             w2c(poseRef, pt[j], cRef);
             if (c2direction(poseRef, cRef, dRef)) {
+              //cout << "dRef " << Vector3dRef(dRef).transpose() << endl;
               double p2[3], len[3];
               minus3(poseRef+3, pose[i]+3, p2);
+              //cout << "p2 " << Vector3dRef(p2).transpose() << endl;
               CHECK(ray_intersect(p2, d1, dRef, len)); //never parallel
+              //cout << "p2: " << Vector3dRef(p2).transpose() << endl;
 
               double pd1[3], pd2[3];
               scalar3(d1, len[0], pd1);
               plus3(pd1, pose[i]+3, pd1);
+              //cout << "pd1 " << Vector3dRef(pd1).transpose() << endl;
               CHECK_LE(dist3(pt[j], pd1), 1e-9);
 
               scalar3(dRef, len[1], pd2);
               plus3(pd2, poseRef+3, pd2);
+              //cout << "pd2 " << Vector3dRef(pd2).transpose() << endl;
               CHECK_LE(dist3(pt[j], pd2), 1e-9);
 
               CHECK_GE(len[0], _EPS); // behind the camera
@@ -250,26 +266,31 @@ TEST(SfM, reprojection) {
               CHECK(triangulate(pose[i]+3, d1,
                               poseRef+3, dRef,
                               tri));
+              //cout << "tri " << Vector3dRef(tri).transpose() << endl;
 
               CHECK_NEAR(dist3(pose[i]+3, tri), len[0], 1e-5); // imprecise!
               CHECK_NEAR(dist3(poseRef+3, tri), len[1], 1e-5); // imprecise!
 
               double imgRef[2];
               if (w2i(cam[k], poseRef, tri, imgRef)) {
+                //cout << "imgRef " << Vector2dRef(imgRef).transpose() << endl;
                 CHECK_LE(dist3(pt[j], tri), 1e-5); // imprecise!
 
                 const static double threshold = 1.0; // no outliers
                 CHECK(validate(cam[k], pose[i], img, pt[j], threshold));
                 CHECK(validate(cam[k], poseRef, imgRef, pt[j], threshold));
 
+                //cout << "p2; " << Vector3dRef(p2).transpose() << endl;
                 CHECK(ray_intersect(p2, d1, dRef, len)); //never parallel
 
+                //cout << "len " << Vector3dRef(len).transpose() << endl;
                 CHECK_GE(len[1], _EPS); // behind the camera
 
                 double dist[3];
-                if(rayDist(cam[k], pose[i], img,
-                        cam[k], poseRef, imgRef,
-                        dist))
+                if (rayDist(cam[k], pose[i], img,
+                            cam[k], poseRef, imgRef,
+                            dist))
+                  //cout << "dist " << Vector3dRef(dist).transpose() << endl;
                   CHECK_LE(norm3(dist), dist3(pose[i]+3, poseRef) + 1e-1); // rays intersect, imprecise!
               }
 //              else
