@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(camera360)
+project(RSBA)
 
 enable_testing()
 
