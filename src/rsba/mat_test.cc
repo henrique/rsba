@@ -7,10 +7,10 @@
 #include <gtest/gtest.h>
 #include <Eigen/Geometry>
 
-#include "base/asserts.h"
-#include "base/shUtils.h"
-#include "mat.h"
-#include "eigenTypes.h"
+#include "rsba/base/asserts.h"
+#include "rsba/base/shUtils.h"
+#include "rsba/mat.h"
+#include "rsba/eigenTypes.h"
 
 using namespace std;
 using namespace vision;

@@ -9,7 +9,7 @@
 #include <iostream>
 #include <openssl/md5.h>
 
-#include "VideoSfM.h"
+#include "rsba/struct/VideoSfM.h"
 
 namespace vision {
 namespace sfm {

@@ -1,10 +1,10 @@
 #ifndef _VideoSfMHandler_h
 #define _VideoSfMHandler_h
 
-#include "struct/VideoSfM.h"
-#include "pointers.h"
-#include "SfmOptions.h"
-#include "CeresHandler.h"
+#include "rsba/struct/VideoSfM.h"
+#include "rsba/pointers.h"
+#include "rsba/SfmOptions.h"
+#include "rsba/CeresHandler.h"
 
 #include <vector>
 

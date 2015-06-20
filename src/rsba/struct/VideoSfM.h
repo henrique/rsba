@@ -6,9 +6,9 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/nonfree/features2d.hpp>
 
-#include "gen-cpp/VideoSfM.h"
-#include "SfmOptions.h"
-#include "mat.h"
+#include "rsba/gen-cpp/VideoSfM.h"
+#include "rsba/SfmOptions.h"
+#include "rsba/mat.h"
 
 using namespace ::std;
 using namespace ::apache::thrift;

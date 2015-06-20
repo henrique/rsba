@@ -5,9 +5,9 @@
 #include <cstdio>
 #include <iostream>
 
-#include "mat.h"
-#include "tracking.h"
-#include "video_bundler_free.h"
+#include "rsba/mat.h"
+#include "rsba/tracking.h"
+#include "rsba/video_bundler_free.h"
 
 namespace vision {
 

@@ -6,13 +6,13 @@
 #include <Eigen/Core>
 #include <cstddef>
 
-#include "mat.h"
-#include "struct/VideoSfM.h"
-#include "video_bundler_free.h"
-#include "video_bundler_life.h"
-#include "video_bundler_structless.h"
-#include "video_bundler_rs_inter.h"
-#include "VideoSfmBaRs.h"
+#include "rsba/mat.h"
+#include "rsba/struct/VideoSfM.h"
+#include "rsba/video_bundler_free.h"
+#include "rsba/video_bundler_life.h"
+#include "rsba/video_bundler_structless.h"
+#include "rsba/video_bundler_rs_inter.h"
+#include "rsba/VideoSfmBaRs.h"
 
 
 using namespace ::std;

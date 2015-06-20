@@ -71,11 +71,11 @@ add_test(SfMtest mat_test)
 
 
 # install
-install(TARGETS VideoSfm
+install(TARGETS VideoSfm sfm_thrift
         LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib/static)
+        ARCHIVE DESTINATION lib)
 
-install(DIRECTORY . DESTINATION includes/rsba
+install(DIRECTORY . DESTINATION include/rsba
         FILES_MATCHING PATTERN "*.h")
 ## TODO HM: select include files
 

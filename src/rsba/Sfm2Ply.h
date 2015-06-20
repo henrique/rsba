@@ -1,8 +1,8 @@
 #ifndef _Sfm2Ply_h
 #define _Sfm2Ply_h
 
-#include "struct/VideoSfM.h"
-#include "SfmOptions.h"
+#include "rsba/struct/VideoSfM.h"
+#include "rsba/SfmOptions.h"
 
 
 using namespace std;

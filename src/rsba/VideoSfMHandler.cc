@@ -1,12 +1,12 @@
 // Author: Henrique Mendonça <henrique@apache.org>
-#include "VideoSfMHandler.h"
+#include "rsba/VideoSfMHandler.h"
 
 #include <vector>
 
-#include "mat.h"
-#include "Sfm2Ply.h"
-#include "struct/VideoSfM.h"
-#include "solveRSpnp.h"
+#include "rsba/mat.h"
+#include "rsba/Sfm2Ply.h"
+#include "rsba/struct/VideoSfM.h"
+#include "rsba/solveRSpnp.h"
 
 #include <opencv2/calib3d/calib3d.hpp>
 

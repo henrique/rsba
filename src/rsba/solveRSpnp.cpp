@@ -1,8 +1,8 @@
 // Author: Henrique Mendonça <henrique@apache.org>
-#include "solveRSpnp.h"
-#include "mat.h"
-#include "VideoSfmBaRs.h"
-#include "struct/VideoSfM.h"
+#include "rsba/solveRSpnp.h"
+#include "rsba/mat.h"
+#include "rsba/VideoSfmBaRs.h"
+#include "rsba/struct/VideoSfM.h"
 
 #include <ceres/rotation.h>
 #include <opencv2/core/core_c.h>

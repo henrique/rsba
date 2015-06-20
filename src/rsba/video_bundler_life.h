@@ -1,5 +1,5 @@
-#ifndef _VideoBundlerStructLess_h
-#define _VideoBundlerStructLess_h
+#ifndef _VideoBundlerLife_h
+#define _VideoBundlerLife_h
 
 #include <cmath>
 #include <cstdio>
@@ -11,7 +11,7 @@
 #include <ceres/rotation.h>
 
 
-#include "mat.h"
+#include "rsba/mat.h"
 
 
 
@@ -19,17 +19,17 @@ namespace vision {
 
 // Templated pinhole camera model for used with Ceres.
 // The principal point is not modeled (i.e. it is assumed be at the image center)
-struct RayDistance {
-  static const unsigned short NUM_RESIDUALS = 3;
+struct LifeTriangulation {
+  static const unsigned short NUM_RESIDUALS = 4;
 
-  RayDistance(const double* const observed,
+  LifeTriangulation(const double* const observed,
               const double* const observed2) // 2D
       : observed_x(observed[0]),
         observed_y(observed[1]),
         observed2_x(observed2[0]),
         observed2_y(observed2[1]) {}
 
-  RayDistance(const double camera[NUM_CAM_PARAMS],
+  LifeTriangulation(const double camera[NUM_CAM_PARAMS],
               const double* const observed,
               const double* const observed2) // 2D
       : observed_x(observed[0]),
@@ -39,7 +39,7 @@ struct RayDistance {
     memcpy(camera_params, camera, sizeof(camera_params));
   }
 
-  RayDistance(const double camera[NUM_CAM_PARAMS],
+  LifeTriangulation(const double camera[NUM_CAM_PARAMS],
               const double pose2[NUM_POSE_PARAMS],
               const double* const observed,
               const double* const observed2) // 2D
@@ -84,7 +84,17 @@ struct RayDistance {
     T obs[2] = { T(observed_x), T(observed_y) };
     T obs2[2] = { T(observed2_x), T(observed2_y) };
 
-    rayDist(camera, pose, obs, camera, pose2, obs2, residuals);
+    T point[3], img[2], img2[2];
+    if (triangulate(camera, pose, obs, camera, pose2, obs2, point)
+        and w2i(camera, pose, point, img, false)
+        and w2i(camera, pose2, point, img2, false)) {
+      residuals[0] = img[0] - obs[0];
+      residuals[1] = img[1] - obs[1];
+      residuals[2] = img2[0] - obs2[0];
+      residuals[3] = img2[1] - obs2[1];
+    } else {
+      residuals[0] = residuals[1] = residuals[2] = residuals[3] = T(1e4);
+    }
 
     return true;
   }
@@ -95,12 +105,12 @@ struct RayDistance {
       const double* const observed,
       const double* const observed2)
   {
-    return (new ceres::AutoDiffCostFunction<RayDistance,
+    return (new ceres::AutoDiffCostFunction<LifeTriangulation,
         NUM_RESIDUALS,
         NUM_CAM_PARAMS,
         NUM_POSE_PARAMS,
         NUM_POSE_PARAMS>( // second pose
-                new RayDistance(observed, observed2)));
+                new LifeTriangulation(observed, observed2)));
   }
 
   // Factory to hide the construction of the CostFunction object from the client code.
@@ -109,11 +119,11 @@ struct RayDistance {
       const double* const observed,
       const double* const observed2)
   {
-    return (new ceres::AutoDiffCostFunction<RayDistance,
+    return (new ceres::AutoDiffCostFunction<LifeTriangulation,
         NUM_RESIDUALS,
         NUM_POSE_PARAMS,
         NUM_POSE_PARAMS>( // second pose
-                new RayDistance(camera_params, observed, observed2)));
+                new LifeTriangulation(camera_params, observed, observed2)));
   }
 
   // Factory to hide the construction of the CostFunction object from the client code.
@@ -123,10 +133,10 @@ struct RayDistance {
       const double* const observed,
       const double* const observed2)
   {
-    return (new ceres::AutoDiffCostFunction<RayDistance,
+    return (new ceres::AutoDiffCostFunction<LifeTriangulation,
         NUM_RESIDUALS,
         NUM_POSE_PARAMS>(
-                new RayDistance(camera_params, prev_pose, observed, observed2)));
+                new LifeTriangulation(camera_params, prev_pose, observed, observed2)));
   }
 
   // 2D observation
@@ -145,6 +155,7 @@ struct RayDistance {
 
   //TODO use references or pointers to save memory
 };
+
 
 }  // namespace vision
 

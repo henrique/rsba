@@ -2,7 +2,7 @@
 #define _SfmFlags_h
 
 
-#include "SfmOptions.h"
+#include "rsba/SfmOptions.h"
 #include <google/gflags.h>
 
 

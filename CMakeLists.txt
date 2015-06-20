@@ -17,5 +17,5 @@ endif (OPENMP_FOUND)
 set (BASE_DIR "src")
 include_directories(${BASE_DIR})
 
-add_subdirectory(${BASE_DIR})
+add_subdirectory(${BASE_DIR}/rsba)
 

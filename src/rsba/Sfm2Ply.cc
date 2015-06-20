@@ -1,7 +1,7 @@
-#include "Sfm2Ply.h"
+#include "rsba/Sfm2Ply.h"
 
-#include "mat.h"
-#include "struct/VideoSfM.h"
+#include "rsba/mat.h"
+#include "rsba/struct/VideoSfM.h"
 
 #include <math.h>
 #include <stdio.h>

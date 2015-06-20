@@ -5,10 +5,10 @@
 #include <cstdio>
 #include <iostream>
 
-#include "mat.h"
-#include "SfmOptions.h"
-#include "struct/VideoSfM.h"
-#include "video_bundler_free.h"
+#include "rsba/mat.h"
+#include "rsba/SfmOptions.h"
+#include "rsba/struct/VideoSfM.h"
+#include "rsba/video_bundler_free.h"
 
 namespace vision { namespace sfm {
 

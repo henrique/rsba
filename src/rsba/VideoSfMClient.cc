@@ -1,4 +1,4 @@
-#include "VideoSfMClient.h"
+#include "rsba/VideoSfMClient.h"
 
 #include <math.h>
 #include <stdio.h>
@@ -16,9 +16,9 @@
 #include <opencv2/video/tracking.hpp>
 #include <opencv2/nonfree/features2d.hpp>
 
-#include "mat.h"
-#include "Sfm2Ply.h"
-#include "struct/VideoSfMCache.h"
+#include "rsba/mat.h"
+#include "rsba/Sfm2Ply.h"
+#include "rsba/struct/VideoSfMCache.h"
 
 
 using namespace cv;

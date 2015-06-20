@@ -8,9 +8,9 @@
 #include <opencv2/video/tracking.hpp>
 #include <opencv2/nonfree/features2d.hpp>
 
-#include "pointers.h"
-#include "VideoSfMHandler.h"
-#include "struct/VideoSfM.h"
+#include "rsba/pointers.h"
+#include "rsba/VideoSfMHandler.h"
+#include "rsba/struct/VideoSfM.h"
 
 
 

@@ -7,12 +7,12 @@
 #include <thread>
 #include <glog/logging.h>
 
-#include "ceres/ceres.h"
-#include "ceres/rotation.h"
-#include "Eigen/Core"
+#include "rsba/ceres/ceres.h"
+#include "rsba/ceres/rotation.h"
+#include "rsba/Eigen/Core"
 
 
-#include "mat.h"
+#include "rsba/mat.h"
 
 
 namespace vision {

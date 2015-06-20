@@ -4,7 +4,7 @@
 
 #include <ceres/ceres.h>
 #include <ceres/rotation.h>
-#include "eigenTypes.h"
+#include "rsba/eigenTypes.h"
 
 
 using namespace std;

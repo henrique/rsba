@@ -2,7 +2,7 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/nonfree/features2d.hpp>
 
-#include "struct/VideoSfM.h"
+#include "rsba/struct/VideoSfM.h"
 
 using namespace ::std;
 using namespace ::apache::thrift;

@@ -1,7 +1,7 @@
 #ifndef __eigenTypes_h__
 #define __eigenTypes_h__
 
-#include "Eigen/Core"
+#include <Eigen/Core>
 
 template <class T, size_t N>
 using Vector = Eigen::Matrix<T, N, 1>;
