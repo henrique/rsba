@@ -9,8 +9,8 @@
 
 #include "rsba/base/asserts.h"
 #include "rsba/base/shUtils.h"
-#include "rsba/mat.h"
-#include "rsba/eigenTypes.h"
+#include "rsba/mat/cam.h"
+#include "rsba/mat/eigenTypes.h"
 
 using namespace std;
 using namespace vision;

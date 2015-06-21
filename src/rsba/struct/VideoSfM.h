@@ -8,7 +8,7 @@
 
 #include "rsba/gen-cpp/VideoSfM.h"
 #include "rsba/SfmOptions.h"
-#include "rsba/mat.h"
+#include "rsba/mat/cam.h"
 
 using namespace ::std;
 using namespace ::apache::thrift;

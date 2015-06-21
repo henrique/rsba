@@ -6,7 +6,7 @@
 #include <Eigen/Core>
 #include <cstddef>
 
-#include "rsba/mat.h"
+#include "rsba/mat/cam.h"
 #include "rsba/struct/VideoSfM.h"
 #include "rsba/video_bundler_free.h"
 #include "rsba/video_bundler_life.h"

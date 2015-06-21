@@ -2,7 +2,7 @@
 #define _VideoSfMHandler_h
 
 #include "rsba/struct/VideoSfM.h"
-#include "rsba/pointers.h"
+#include "rsba/base/pointers.h"
 #include "rsba/SfmOptions.h"
 #include "rsba/CeresHandler.h"
 

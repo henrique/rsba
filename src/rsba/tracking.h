@@ -7,8 +7,8 @@
 #include <iostream>
 #include <assert.h>
 
-#include "rsba/pointers.h"
-#include "rsba/mat.h"
+#include "rsba/base/pointers.h"
+#include "rsba/mat/cam.h"
 
 
 

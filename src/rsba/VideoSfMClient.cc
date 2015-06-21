@@ -16,7 +16,7 @@
 #include <opencv2/video/tracking.hpp>
 #include <opencv2/nonfree/features2d.hpp>
 
-#include "rsba/mat.h"
+#include "rsba/mat/cam.h"
 #include "rsba/Sfm2Ply.h"
 #include "rsba/struct/VideoSfMCache.h"
 

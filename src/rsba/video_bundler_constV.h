@@ -12,7 +12,7 @@
 #include "rsba/Eigen/Core"
 
 
-#include "rsba/mat.h"
+#include "rsba/mat/cam.h"
 
 
 namespace vision {

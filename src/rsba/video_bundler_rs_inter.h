@@ -5,7 +5,7 @@
 #include <cstdio>
 #include <iostream>
 
-#include "rsba/mat.h"
+#include "rsba/mat/cam.h"
 #include "rsba/tracking.h"
 #include "rsba/video_bundler_free.h"
 

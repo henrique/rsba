@@ -11,7 +11,7 @@
 #include <ceres/rotation.h>
 
 
-#include "rsba/mat.h"
+#include "rsba/mat/cam.h"
 
 
 

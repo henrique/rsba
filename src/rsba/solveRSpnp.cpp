@@ -1,6 +1,6 @@
 // Author: Henrique Mendonça <henrique@apache.org>
 #include "rsba/solveRSpnp.h"
-#include "rsba/mat.h"
+#include "rsba/mat/cam.h"
 #include "rsba/VideoSfmBaRs.h"
 #include "rsba/struct/VideoSfM.h"
 

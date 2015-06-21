@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "rsba/mat.h"
+#include "rsba/mat/cam.h"
 #include "rsba/Sfm2Ply.h"
 #include "rsba/struct/VideoSfM.h"
 #include "rsba/solveRSpnp.h"
