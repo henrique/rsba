@@ -73,8 +73,9 @@ install:
 
 
 script:
- -  mkdir build && cd build
- -  cmake $CM_ENV ..
- -  make -j2
- -  make test
+ - mkdir build && cd build
+ - cmake $CM_ENV ..
+ - make -j2
+ - make test
+ - sudo make install
 
