@@ -1,4 +1,5 @@
 #include "rsba/struct/VideoSfMCache.h"
+#include "rsba/base/serialize.h"
 
 #include <math.h>
 #include <stdio.h>
@@ -12,12 +13,6 @@
 #include <openssl/md5.h>
 #include <sys/stat.h>
 
-#include <thrift/transport/TFileTransport.h>
-#include <thrift/protocol/TBinaryProtocol.h>
-
-
-using namespace ::apache::thrift::transport;
-using namespace ::apache::thrift::protocol;
 
 using namespace ::std;
 using namespace ::vision::sfm;
@@ -69,20 +64,13 @@ void VideoSfMCache::save(const gen::Frame& obj) {
 
 
 void VideoSfMCache::serialize(const gen::Frame& obj) {
-  boost::shared_ptr<TFileTransport> transport(new TFileTransport(filename));
-  boost::shared_ptr<TBinaryProtocol> protocol(new TBinaryProtocol(transport));
-  //transport->open();
-  obj.write(protocol.get());
-  //transport->flush();
+  sfm::serialize(obj, filename);
 }
 
 
 
 void VideoSfMCache::unserialize(gen::Frame& obj) {
-  boost::shared_ptr<TFileTransport> transport(new TFileTransport(filename));
-  boost::shared_ptr<TBinaryProtocol> protocol(new TBinaryProtocol(transport));
-  obj.read(protocol.get());
-  //transport->flush();
+  sfm::unserialize(obj, filename);
 }
 
 

@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 2.8)
 project(RSBA)
 
-add_subdirectory(test)
+IF (BUILD_TESTING)
+  add_subdirectory(test)
+ENDIF()
 
 
 

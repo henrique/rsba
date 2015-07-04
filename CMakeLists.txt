@@ -14,6 +14,11 @@ if (OPENMP_FOUND)
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
 endif (OPENMP_FOUND)
 
+#FIND_PACKAGE(Eigen REQUIRED)
+#include_directories(EIGEN3_INCLUDE_DIR)
+
+OPTION(BUILD_TESTING "Enable tests" ON)
+
 set (BASE_DIR "src")
 include_directories(${BASE_DIR})
 
