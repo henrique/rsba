@@ -1,15 +1,20 @@
+#include "rsba/struct/VideoSfM.h"
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
 #include <string>
-#include <vector>
-#include <random>
 #include <iostream>
-#include <openssl/md5.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/stat.h>
 
-#include "rsba/struct/VideoSfM.h"
+#include <thrift/transport/TFileTransport.h>
+#include <thrift/protocol/TBinaryProtocol.h>
+
+using ::apache::thrift::transport::TFileTransport;
+using ::apache::thrift::protocol::TBinaryProtocol;
+
 
 namespace vision {
 namespace sfm {
@@ -17,16 +22,52 @@ namespace sfm {
 
 class VideoSfMCache {
 public:
-  VideoSfMCache(const std::string& folder, const std::string& prefix);
+  VideoSfMCache(const std::string& fullpath);
+  VideoSfMCache(const std::string& folder, const std::string& filename);
   VideoSfMCache(const std::string& folder, const std::string& prefix, const cv::Mat& src);
 
-  bool load(gen::Frame& obj);
-  void save(const gen::Frame& obj);
+
+  template <class T>
+  bool load(T& obj) {
+    if (fexists(filename)) {
+      cout << "loading: " << filename << endl;
+      unserialize(obj);
+      return true;
+    }
+
+    return false;
+  }
+
+
+  template <class T>
+  void save(const T& obj) {
+    if (fexists(filename)) {
+      unlink(filename.c_str());
+      cout << filename << " already exists!!! overriding... " << endl;
+    }
+    cout << "creating: " << folder << filename << endl;
+    mkdir(folder.c_str(), 0777);
+    open(filename.c_str(), O_CREAT|O_TRUNC|O_WRONLY, 0666); // create file
+
+    serialize(obj);
+  }
 
 
 protected:
-  void serialize(const gen::Frame& obj);
-  void unserialize(gen::Frame& obj);
+
+  template <class T>
+  void serialize(const T& obj) {
+    boost::shared_ptr<TFileTransport> transport(new TFileTransport(filename));
+    boost::shared_ptr<TBinaryProtocol> protocol(new TBinaryProtocol(transport));
+    obj.write(protocol.get());
+  }
+
+  template <class T>
+  void unserialize(T& obj) {
+    boost::shared_ptr<TFileTransport> transport(new TFileTransport(filename));
+    boost::shared_ptr<TBinaryProtocol> protocol(new TBinaryProtocol(transport));
+    obj.read(protocol.get());
+  }
 
   char* str2md5(const char* str, int length);
 
@@ -41,7 +82,6 @@ protected:
   std::string Mat2str(const cv::Mat& src);
 
   const std::string folder;
-  const std::string prefix;
   const std::string filename;
 };
 

@@ -1,17 +1,13 @@
 #include "rsba/struct/VideoSfMCache.h"
-#include "rsba/base/serialize.h"
 
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <string>
 #include <vector>
-#include <fcntl.h>
-#include <random>
 #include <iostream>
 #include <openssl/md5.h>
-#include <sys/stat.h>
+
 
 
 using namespace ::std;
@@ -24,53 +20,20 @@ using namespace ::vision::sfm;
 
 
 
+VideoSfMCache::VideoSfMCache(const std::string& fullpath)
+: folder(fullpath.substr(0, fullpath.find_last_of("\\/")+1)), filename(fullpath.substr(folder.length()))
+{
+}
 
 
-VideoSfMCache::VideoSfMCache(const std::string& folder, const std::string& prefix)
-: folder(folder), prefix(prefix), filename(folder + prefix)
+VideoSfMCache::VideoSfMCache(const std::string& folder, const std::string& filename)
+: folder(folder), filename(folder + filename)
 {
 }
 
 VideoSfMCache::VideoSfMCache(const std::string& folder, const std::string& prefix, const cv::Mat& src)
-: folder(folder), prefix(prefix), filename(folder + prefix + str2md5(Mat2str(src)))
+: folder(folder), filename(folder + prefix + str2md5(Mat2str(src)))
 {
-}
-
-
-
-bool VideoSfMCache::load(gen::Frame& obj) {
-  if (fexists(filename)) {
-    unserialize(obj);
-    return true;
-  }
-
-  return false;
-}
-
-
-
-void VideoSfMCache::save(const gen::Frame& obj) {
-  if (fexists(filename)) {
-    unlink(filename.c_str());
-    cout << filename << " already exists!!! overriding... " << endl;
-  }
-  cout << "creating: " << filename << endl;
-  mkdir(folder.c_str(), 0777);
-  open(filename.c_str(), O_CREAT|O_TRUNC|O_WRONLY, 0666); // create file
-
-  serialize(obj);
-}
-
-
-
-void VideoSfMCache::serialize(const gen::Frame& obj) {
-  sfm::serialize(obj, filename);
-}
-
-
-
-void VideoSfMCache::unserialize(gen::Frame& obj) {
-  sfm::unserialize(obj, filename);
 }
 
 
