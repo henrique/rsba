@@ -66,8 +66,8 @@ struct SfmOptions {
     bool const3d = false; // fix 3D points
     uint fixFirstNCameras = 0;
     bool fixScale = false; // fix first and last camera position to constrain scale changes
-    bool fixRotation = false; // fix rotation parameters
-    bool fixPosition = false; // fix 3D position parameters
+    bool fixRotation = false; // fix cameras' rotation parameters
+    bool fixPosition = false; // fix cameras' 3D position parameters
 
 
     double constFrameVelocity = 0; // scale of constant velocity prior

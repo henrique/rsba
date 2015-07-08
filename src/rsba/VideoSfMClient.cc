@@ -312,7 +312,7 @@ void VideoSfMClient::Orientation(double rotation[9], const size_t frameKey, cons
   gen::Frame& f = frames[frameKey];
 
   switch (f.poses.size()) {
-    case 0: throw(runtime_error("empty frame"));
+    case 0: throw runtime_error("empty frame");
 
     case 1:
       ceres::AngleAxisToRotationMatrix(f.poses[0].data(), rotation);
@@ -340,7 +340,7 @@ void VideoSfMClient::Position(double pose[3], const size_t frameKey, const doubl
   gen::Frame& f = frames[frameKey];
 
   switch (f.poses.size()) {
-    case 0: throw(runtime_error("empty frame"));
+    case 0: throw runtime_error("empty frame");
 
     case 1:
       assign3(f.poses[0].data()+3, pose);
@@ -389,7 +389,7 @@ void VideoSfMClient::finalize(bool reset)
   }
 
   // check if at least one run was successful
-  if ( ! rtn) throw(runtime_error("BA failure"));
+  if ( ! rtn) throw runtime_error("BA failure");
 
   // update frames
   for (size_t fi = 0; fi < frames.size(); fi++) {
@@ -410,7 +410,7 @@ void VideoSfMClient::finalize(bool reset)
 void VideoSfMClient::fullBA(const size_t iterations)
 {
   if ( ! handler->fullBA(authToken, sessionKey, iterations, true)) {
-    throw(runtime_error("BA failure"));
+    throw runtime_error("BA failure");
   }
 
   // update frames

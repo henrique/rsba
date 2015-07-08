@@ -74,11 +74,11 @@ void toCV(const std::vector<gen::Observation>& obs, std::vector<cv::KeyPoint>& p
 
 double* getPose(const gen::Session& sess, gen::Frame& f, const SfmOptions& opt, const double obs[2]) {
   switch (f.poses.size()) {
-    case 0: throw(runtime_error("empty frame"));
+    case 0: throw runtime_error("empty frame");
 
     case 1: return f.poses[0].data();
 
-    case 2: throw(runtime_error("not possible to get a pose reference on linear RS"));
+    case 2: throw runtime_error("not possible to get a pose reference on linear RS");
 
     default:
       double line;
@@ -102,7 +102,7 @@ double* getPose(const gen::Session& sess, gen::Frame& f, const SfmOptions& opt, 
 
 void getPose(const gen::Session& sess, const gen::Frame& f, const SfmOptions& opt, const double obs[2], double pose[NUM_POSE_PARAMS]){
   switch (f.poses.size()) {
-    case 0: throw(runtime_error("empty frame"));
+    case 0: throw runtime_error("empty frame");
 
     case 1:
       assign<6>(f.poses[0].data(), pose);
