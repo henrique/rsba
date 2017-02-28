@@ -14,7 +14,6 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/video/tracking.hpp>
-#include <opencv2/nonfree/features2d.hpp>
 
 #include "rsba/mat/cam.h"
 #include "rsba/Sfm2Ply.h"
@@ -34,7 +33,13 @@ using namespace vision::sfm;
 
 VideoSfMClient::VideoSfMClient(const SfmOptions& opt)
  : opt(opt),
+#ifdef CV_XFEATURES
+   _siftDetector(cv::xfeatures2d::SIFT::create(
+     opt.sift.nfeatures, opt.sift.nOctaveLayers, opt.sift.contrastThreshold, opt.sift.edgeThreshold, opt.sift.sigma)
+   ),
+#else
    _siftDetector(opt.sift.nfeatures, opt.sift.nOctaveLayers, opt.sift.contrastThreshold, opt.sift.edgeThreshold, opt.sift.sigma),
+#endif
    handler(new sfm::VideoSfMHandler(opt))
 {
   if (opt.model.rolling_shutter) {
@@ -177,7 +182,12 @@ bool VideoSfMClient::parseFrame(const cv::Mat& inFrame, cv::Mat& outFrame, const
       //DynamicAdaptedFeatureDetector detector(new StarAdjuster(), opt.sift.nfeatures*0.5, opt.sift.nfeatures, 5);
       //PyramidAdaptedFeatureDetector detector(new GFTTDetector(opt.sift.nfeatures), 1);
       //detector.detect(_nextImg, _keypoints[0]);
+#ifdef CV_XFEATURES
+      _siftDetector->detect(_nextImg, _keypoints[frameKey]);
+      _siftDetector->compute(_nextImg, _keypoints[frameKey], _descriptors[frameKey]);
+#else
       _siftDetector(_nextImg, _mask, _keypoints[frameKey], _descriptors[frameKey]);
+#endif
       cout << _keypoints[frameKey].size() << " features found" << endl;
       f.obs = convertCV(_keypoints[frameKey], _descriptors[frameKey], inFrame);
       f.__isset.obs = true;

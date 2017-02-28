@@ -6,7 +6,13 @@
 
 #include <ceres/rotation.h>
 #include <opencv2/core/core_c.h>
+#if (defined(CV_VERSION_EPOCH) && CV_VERSION_EPOCH == 2)
 #include <opencv2/core/internal.hpp>
+#else
+#define __OPENCV_BUILD
+#include <opencv2/cvconfig.h>
+#include <opencv2/core/private.hpp>
+#endif
 #include <iostream>
 //#include <boost/timer/timer.hpp>
 

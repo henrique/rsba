@@ -709,7 +709,7 @@ bool VideoSfMHandler::solveRsPnP(const int32_t sessionKey, const SfmOptions& opt
       solvePnPRansac(pts, obs, K, distcoeff,
           rvec, tvec, _opt.mod_init.reuseLastPose, 500,
           sqrt(_opt.tracks.sqrdThreshold)*2,
-          pts.size()*.7, inliers, CV_ITERATIVE);
+          pts.size()*.7, inliers, SOLVEPNP_ITERATIVE);
 
       if (inliers.rows <= 4) {
         solvePnPRansac(pts, obs, K, distcoeff,
@@ -734,7 +734,7 @@ bool VideoSfMHandler::solveRsPnP(const int32_t sessionKey, const SfmOptions& opt
           rvec, tvec, rvec2, tvec2,
           (SHUTTER)sess.rs, sess.scanlines.data(), true, 1000,
           sqrt(_opt.tracks.sqrdThreshold),
-          pts.size()*.7, inliers, cv::ITERATIVE, _opt.mod_init.minPnPfeatures);
+          pts.size()*.7, inliers, SOLVEPNP_ITERATIVE, _opt.mod_init.minPnPfeatures);
       std::cout << rvec << tvec << endl;
       std::cout << rvec2 << tvec2 << endl;
     }
