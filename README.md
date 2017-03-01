@@ -1,6 +1,6 @@
 ### Dependencies
 
-Either install the packages libgflags-dev and libgoogle-glog-dev or install them from source. Google ceres-solver 1.9.0 and Apache Thrift 0.9.2 are also required. Please follow ./.travis.yml for installation instructions.
+Either install the packages libgflags-dev and libgoogle-glog-dev or install them from source. Google ceres-solver 1.9.0 and Apache Thrift 0.10.0 are also required. Please follow ./.travis.yml for installation instructions.
 
 ### Install
 
