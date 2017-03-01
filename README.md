@@ -20,3 +20,4 @@ Alternatively, you can also use CMAKE_BUILD_TYPE=RelWithDebInfo for a *much* fas
 
     make test
 
+[![Build Status](https://travis-ci.org/henrique/rsba.png?branch=master)](https://travis-ci.org/henrique/rsba)

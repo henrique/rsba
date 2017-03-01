@@ -16,8 +16,7 @@ env:
 
 
 install:
- - sudo apt-get install -qq cmake clang g++ libatlas-base-dev libeigen3-dev libsuitesparse-dev libgtest-dev
-# libgoogle-glog-dev libgflags-dev
+ - sudo apt-get install -qq cmake clang g++ libatlas-base-dev libeigen3-dev libsuitesparse-dev libgtest-dev libgflags-dev libgoogle-glog-dev
  - $CXX --version; $CC --version
  - "cd /usr/src/gtest && sudo cmake $CM_ENV . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -"
  - sudo ln -s /usr/include/eigen3/Eigen/ /usr/include/Eigen
@@ -29,23 +28,8 @@ install:
 
 
  - mkdir thirdparty && cd thirdparty
-
-# install gflags
- - git clone https://github.com/gflags/gflags.git -b v2.2.0
- - cd gflags
- - cmake $CM_ENV .; make -j2
- - sudo make install
- - cd ..
-
-# install glog
- - git clone https://github.com/google/glog.git -b v0.3.4
- - cd glog
- - ./configure --with-gflags=/usr/local/
- - make -j2
- - sudo make install
- - cd ..
-
-# install ceres
+ 
+# install ceres (libceres-dev)
  - curl http://ceres-solver.org/ceres-solver-1.9.0.tar.gz | tar xvz
  - mkdir ceres-bin && cd ceres-bin
  - cmake -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF $CM_ENV ../ceres-solver-1.9.0
@@ -55,7 +39,7 @@ install:
 
 # install thrift
  - sudo apt-get install -qq libboost-dev libboost-test-dev libboost-program-options-dev libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-thread-dev libevent-dev libtool flex bison pkg-config libssl-dev
- - git clone https://github.com/apache/thrift.git - b 0.10.0
+ - git clone https://github.com/apache/thrift.git -b 0.10.0
  - cd thrift/;
  - mkdir cmake_build && cd cmake_build
  - cmake -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF -DBUILD_C_GLIB=OFF -DBUILD_JAVA=OFF -DBUILD_PYTHON=OFF $CM_ENV ..
