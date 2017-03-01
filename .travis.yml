@@ -16,7 +16,7 @@ env:
 
 
 install:
- - sudo apt-get install -qq cmake clang g++ libatlas-base-dev libeigen3-dev libsuitesparse-dev libgtest-dev libgflags-dev libgoogle-glog-dev libceres-dev
+ - sudo apt-get install -qq cmake clang g++ libatlas-base-dev libeigen3-dev libsuitesparse-dev libgtest-dev libgflags-dev libgoogle-glog-dev
  - $CXX --version; $CC --version
  - "cd /usr/src/gtest && sudo cmake $CM_ENV . && sudo cmake --build . && sudo mv libg* /usr/local/lib/ ; cd -"
  - sudo ln -s /usr/include/eigen3/Eigen/ /usr/include/Eigen
@@ -28,6 +28,14 @@ install:
 
 
  - mkdir thirdparty && cd thirdparty
+ 
+# install ceres
+ - curl http://ceres-solver.org/ceres-solver-1.9.0.tar.gz | tar xvz
+ - mkdir ceres-bin && cd ceres-bin
+ - cmake -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF $CM_ENV ../ceres-solver-1.9.0
+ - make -j2
+ - sudo make install
+ - cd ..
 
 # install thrift
  - sudo apt-get install -qq libboost-dev libboost-test-dev libboost-program-options-dev libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-thread-dev libevent-dev libtool flex bison pkg-config libssl-dev
