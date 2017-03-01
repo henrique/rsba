@@ -1,6 +1,8 @@
 language: cpp
 sudo: required
-dist: xenial  # Ubuntu 16.04
+
+#Ubuntu 16.04
+dist: xenial
 
 cache:
  - apt
