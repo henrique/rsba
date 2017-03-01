@@ -22,7 +22,7 @@ install:
  - sudo ln -s /usr/include/eigen3/Eigen/ /usr/include/Eigen
 
 #install openCV
- - sudo add-apt-repository "deb http://ppa.launchpad.net/alexei.colin/opencv/ubuntu precise main" -y
+ - sudo add-apt-repository ppa:xqms/opencv-nonfree -y
  - sudo apt-get update -qq
  - sudo apt-get install -qq libopencv-dev libopencv-nonfree-dev
 
@@ -30,16 +30,15 @@ install:
  - mkdir thirdparty && cd thirdparty
 
 # install gflags
- - curl https://gflags.googlecode.com/files/gflags-2.0-no-svn-files.tar.gz | tar xvz
- - cd gflags-2.0
- - ./configure --prefix=/usr/local
- - make -j2
+ - git clone https://github.com/gflags/gflags.git -b v2.2.0
+ - cd gflags
+ - cmake $CM_ENV .; make -j2
  - sudo make install
  - cd ..
 
 # install glog
- - curl https://google-glog.googlecode.com/files/glog-0.3.3.tar.gz | tar xvz
- - cd glog-0.3.3
+ - git clone https://github.com/google/glog.git -b v0.3.4
+ - cd glog
  - ./configure --with-gflags=/usr/local/
  - make -j2
  - sudo make install
@@ -54,13 +53,9 @@ install:
  - cd ..
 
 # install thrift
- - sudo apt-add-repository "deb http://archive.ubuntu.com/ubuntu/ trusty main restricted" -y
- - sudo apt-get update -qq
- - sudo apt-get install -qq cmake clang g++ libboost-dev libboost-test-dev libboost-program-options-dev libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-thread-dev libevent-dev libtool flex bison pkg-config libssl-dev
- - $CXX --version; $CC --version
-
- - curl http://www.apache.org/dyn/closer.cgi?path=/thrift/0.9.3/thrift-0.9.3.tar.gz | tar zx 
- - cd thrift-0.9.3/
+ - sudo apt-get install -qq libboost-dev libboost-test-dev libboost-program-options-dev libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-thread-dev libevent-dev libtool flex bison pkg-config libssl-dev
+ - git clone https://github.com/apache/thrift.git - b 0.10.0
+ - cd thrift/;
  - mkdir cmake_build && cd cmake_build
  - cmake -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF -DBUILD_C_GLIB=OFF -DBUILD_JAVA=OFF -DBUILD_PYTHON=OFF $CM_ENV ..
  - make -j2
