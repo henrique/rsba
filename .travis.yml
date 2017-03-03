@@ -30,9 +30,9 @@ install:
  - mkdir thirdparty && cd thirdparty
  
 # install ceres (libceres-dev)
- - curl http://ceres-solver.org/ceres-solver-1.9.0.tar.gz | tar xvz
+ - curl http://ceres-solver.org/ceres-solver-1.12.0.tar.gz | tar xvz
  - mkdir ceres-bin && cd ceres-bin
- - cmake -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF $CM_ENV ../ceres-solver-1.9.0
+ - cmake -DBUILD_TESTING=OFF -DBUILD_EXAMPLES=OFF $CM_ENV ../ceres-solver-1.12.0
  - make -j2
  - sudo make install
  - cd ..
