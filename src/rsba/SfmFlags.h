@@ -3,7 +3,7 @@
 
 
 #include "rsba/SfmOptions.h"
-#include <google/gflags.h>
+#include <gflags/gflags.h>
 
 
 DEFINE_uint64(sift_nfeatures, 0, "SIFT max number of features per frame");
@@ -64,7 +64,7 @@ struct SfmFlags {
 
   static SfmOptions Parse(int* argc, char*** argv)
   {
-    google::ParseCommandLineFlags(argc, argv, true);
+    gflags::ParseCommandLineFlags(argc, argv, true);
 
     SfmOptions opt;
     opt.model.calibrated = FLAGS_calibrated;
