@@ -23,14 +23,14 @@ namespace sfm {
 class VideoSfMCache {
 public:
   VideoSfMCache(const std::string& fullpath);
-  VideoSfMCache(const std::string& folder, const std::string& filename);
+  VideoSfMCache(const std::string& folder, const std::string& fullpath);
   VideoSfMCache(const std::string& folder, const std::string& prefix, const cv::Mat& src);
 
 
   template <class T>
   bool load(T& obj) {
-    if (fexists(filename)) {
-      cout << "loading: " << filename << endl;
+    if (fexists(fullpath)) {
+      cout << "loading: " << fullpath << endl;
       unserialize(obj);
       return true;
     }
@@ -41,13 +41,13 @@ public:
 
   template <class T>
   void save(const T& obj) {
-    if (fexists(filename)) {
-      unlink(filename.c_str());
-      cout << filename << " already exists!!! overriding... " << endl;
+    if (fexists(fullpath)) {
+      unlink(fullpath.c_str());
+      cout << fullpath << " already exists!!! overriding... " << endl;
     }
-    cout << "creating: " << folder << filename << endl;
+    cout << "creating: " << fullpath << endl;
     mkdir(folder.c_str(), 0777);
-    open(filename.c_str(), O_CREAT|O_TRUNC|O_WRONLY, 0666); // create file
+    open(fullpath.c_str(), O_CREAT|O_TRUNC|O_WRONLY, 0666); // create file
 
     serialize(obj);
   }
@@ -57,14 +57,14 @@ protected:
 
   template <class T>
   void serialize(const T& obj) {
-    boost::shared_ptr<TFileTransport> transport(new TFileTransport(filename));
+    boost::shared_ptr<TFileTransport> transport(new TFileTransport(fullpath));
     boost::shared_ptr<TBinaryProtocol> protocol(new TBinaryProtocol(transport));
     obj.write(protocol.get());
   }
 
   template <class T>
   void unserialize(T& obj) {
-    boost::shared_ptr<TFileTransport> transport(new TFileTransport(filename));
+    boost::shared_ptr<TFileTransport> transport(new TFileTransport(fullpath));
     boost::shared_ptr<TBinaryProtocol> protocol(new TBinaryProtocol(transport));
     obj.read(protocol.get());
   }
@@ -82,7 +82,7 @@ protected:
   std::string Mat2str(const cv::Mat& src);
 
   const std::string folder;
-  const std::string filename;
+  const std::string fullpath;
 };
 
 

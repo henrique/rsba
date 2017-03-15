@@ -21,18 +21,18 @@ using namespace ::vision::sfm;
 
 
 VideoSfMCache::VideoSfMCache(const std::string& fullpath)
-: folder(fullpath.substr(0, fullpath.find_last_of("\\/")+1)), filename(fullpath.substr(folder.length()))
+: folder(fullpath.substr(0, fullpath.find_last_of("\\/")+1)), fullpath(fullpath)
 {
 }
 
 
-VideoSfMCache::VideoSfMCache(const std::string& folder, const std::string& filename)
-: folder(folder), filename(folder + filename)
+VideoSfMCache::VideoSfMCache(const std::string& folder, const std::string& fullpath)
+: folder(folder), fullpath(folder + fullpath)
 {
 }
 
 VideoSfMCache::VideoSfMCache(const std::string& folder, const std::string& prefix, const cv::Mat& src)
-: folder(folder), filename(folder + prefix + str2md5(Mat2str(src)))
+: folder(folder), fullpath(folder + prefix + str2md5(Mat2str(src)))
 {
 }
 
