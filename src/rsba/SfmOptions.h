@@ -38,7 +38,7 @@ struct SfmOptions {
 
   struct Tracks {
     bool synthetic = false; // using synthetic tracks, i.e. no matches
-    bool cacheMatches = true; // save matches under ./cache
+    bool cacheMatches = false; // save matches under ./cache
     double sqrdThreshold = 16.0;
     uint minReprojections = 3;
     uint maxReprojections = 10;
