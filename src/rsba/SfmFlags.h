@@ -12,7 +12,7 @@ DEFINE_double(sift_contrastThreshold, 0.04, "SIFT contrast threshold");
 DEFINE_double(sift_edgeThreshold, 6.5, "SIFT edge threshold");
 DEFINE_double(sift_sigma, 1.6, "SIFT sigma");
 
-DEFINE_bool(cacheMatches, true, "save matches under ./cache");
+DEFINE_bool(cacheMatches, false, "save matches under ./cache");
 DEFINE_double(pixel_threshold, 3.0, "Reprojection threshold in pixels");
 DEFINE_uint64(min_reprojections, 3, "Minimal valid reprojections on a track");
 DEFINE_uint64(max_reprojections, 0, "Maximal valid reprojections on a track");
