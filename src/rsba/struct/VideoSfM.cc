@@ -1,6 +1,5 @@
 #include <vector>
 #include <opencv2/core/core.hpp>
-#include <opencv2/nonfree/features2d.hpp>
 
 #include "rsba/struct/VideoSfM.h"
 
