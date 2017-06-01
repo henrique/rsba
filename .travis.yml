@@ -23,7 +23,7 @@ install:
  - sudo ln -s /usr/include/eigen3/Eigen/ /usr/include/Eigen
 
 #install openCV
- - sudo add-apt-repository ppa:6-mark-h/opencv-nonfree
+ - sudo add-apt-repository ppa:6-mark-h/opencv-nonfree -y
  - sudo apt-get update -qq
  - sudo apt-get install -qq libopencv-dev libopencv-nonfree-dev
 
