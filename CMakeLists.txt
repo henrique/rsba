@@ -3,8 +3,9 @@ project(RSBA)
 
 enable_testing()
 
+OPTION(FORCE_STATIC "Force static buid" OFF)
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -std=c++11")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
 set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG")
 
 FIND_PACKAGE(OpenMP)
@@ -13,6 +14,8 @@ if (OPENMP_FOUND)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
 endif (OPENMP_FOUND)
+
+find_package( OpenCV REQUIRED )
 
 #FIND_PACKAGE(Eigen REQUIRED)
 #include_directories(EIGEN3_INCLUDE_DIR)

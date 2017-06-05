@@ -4,7 +4,6 @@
 #include <vector>
 #include <glog/logging.h>
 #include <opencv2/core/core.hpp>
-#include <opencv2/nonfree/features2d.hpp>
 
 #include "rsba/gen-cpp/VideoSfM.h"
 #include "rsba/SfmOptions.h"

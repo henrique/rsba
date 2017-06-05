@@ -34,7 +34,7 @@ class VideoSfMClient: public sfm::Session
 {
 public:
   VideoSfMClient(const SfmOptions& opt);
-  virtual ~VideoSfMClient();
+  virtual ~VideoSfMClient() throw();
 
   virtual void start();
   virtual size_t addFrame(const cv::Mat& inFrame, cv::Mat& outFrame);

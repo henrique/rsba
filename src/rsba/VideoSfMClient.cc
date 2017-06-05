@@ -49,7 +49,7 @@ VideoSfMClient::VideoSfMClient(const SfmOptions& opt)
 
 
 
-VideoSfMClient::~VideoSfMClient()
+VideoSfMClient::~VideoSfMClient() throw ()
 {
 }
 
