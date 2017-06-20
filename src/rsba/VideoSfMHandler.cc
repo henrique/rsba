@@ -48,7 +48,10 @@ int32_t VideoSfMHandler::newSession(const std::string& authToken, const std::vec
   Session sess;
   sess.cam = camera;
   _sessions.push_back(sess);
-  return _sessions.size() - 1;
+
+  const size_t sessionKey = _sessions.size() - 1;
+  printFrames(sessionKey);
+  return sessionKey;
 }
 
 
@@ -67,7 +70,10 @@ int32_t VideoSfMHandler::newRsSession(const std::string& authToken, const std::v
   sess.scanlines = scanlines;
   sess.__isset.rs = sess.__isset.scanlines = true;
   _sessions.push_back(sess);
-  return _sessions.size() - 1;
+
+  const size_t sessionKey = _sessions.size() - 1;
+  printFrames(sessionKey);
+  return sessionKey;
 }
 
 
@@ -79,13 +85,13 @@ int32_t VideoSfMHandler::newFrame(const std::string& authToken, const int32_t se
   CHECK_LT(sessionKey, _sessions.size());
 
   Session& sess = _sessions[sessionKey];
-  size_t frameKey = sess.frames.size();
+  const size_t frameKey = sess.frames.size();
   sess.frames.push_back(frame);
 
   solve(sessionKey, frameKey);
-  printFrames(sessionKey);
+  printFrame(sessionKey, frameKey);
 
-  string file = "videoSfM" + to_string(frameKey) + ".ply";
+  const string file = "videoSfM" + to_string(frameKey) + ".ply";
   writePly("raw_" + file, sess, _opt, true, true);
 
   return frameKey;
