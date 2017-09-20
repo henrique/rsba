@@ -6,7 +6,6 @@
 #include <iostream>
 #include <thread>
 #include <string.h>
-#include <glog/logging.h>
 #include <ceres/ceres.h>
 #include <ceres/rotation.h>
 

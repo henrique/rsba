@@ -2,7 +2,6 @@
 #define _VideoSfM_h
 
 #include <vector>
-#include <glog/logging.h>
 #include <opencv2/core/core.hpp>
 
 #include "rsba/gen-cpp/VideoSfM.h"
