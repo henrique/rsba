@@ -4,12 +4,13 @@
 
 #include <ceres/ceres.h>
 #include <ceres/rotation.h>
+#include <limits>
 #include "rsba/mat/eigenTypes.h"
 
 
 using namespace std;
 
-#define _EPS __DBL_EPSILON__
+#define _EPS std::numeric_limits<double>::epsilon()
 #define CLAMP(f,min,max) ((f)<(min)?(min):(f)>(max)?(max):(f))
 
 
