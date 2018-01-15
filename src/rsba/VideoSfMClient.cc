@@ -25,10 +25,11 @@ using namespace std;
 using namespace vision::sfm;
 
 
-#if __cplusplus < 201103L
-#define to_string(...) ""
+#ifndef _WIN32
+ #if __cplusplus < 201103L
+ #define to_string(...) ""
+ #endif
 #endif
-
 
 
 VideoSfMClient::VideoSfMClient(const SfmOptions& opt)

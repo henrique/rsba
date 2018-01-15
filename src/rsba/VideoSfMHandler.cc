@@ -18,11 +18,11 @@ using namespace ::vision;
 using namespace ::vision::cameras;
 
 
-
-#if __cplusplus < 201103L
-#define to_string(...) ""
+#ifndef _WIN32
+ #if __cplusplus < 201103L
+ #define to_string(...) ""
+ #endif
 #endif
-
 
 
 namespace vision { namespace sfm {

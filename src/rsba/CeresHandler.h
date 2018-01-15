@@ -407,12 +407,10 @@ class CeresHandler {
     }
 
 #ifdef NDEBUG
-#if __cplusplus >= 201103L
     unsigned nThreads = std::thread::hardware_concurrency();
     if (nThreads > 0) {
       options->num_linear_solver_threads = options->num_threads = nThreads;
     }
-#endif
 #endif
 
 
