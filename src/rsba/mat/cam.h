@@ -410,7 +410,7 @@ inline bool w2i(const T cam[NUM_CAM_PARAMS], //focal length + distortion
   if (pt[2] < T(1e-8)) { // in front of the camera
     if (validate) {
       return false;
-    } else if (pt[2] < T(_EPS) and pt[2] > T(-_EPS)) { // numerically zero
+    } else if (pt[2] < T(_EPS) && pt[2] > T(-_EPS)) { // numerically zero
       pt[2] = T(_EPS);
     }
   }
