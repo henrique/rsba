@@ -246,7 +246,7 @@ bool VideoSfMHandler::reprojectMatches(Session& sess, const size_t frameKey, con
       if (o2.__isset.track)
       {
         gen::Track& t = sess.getTrack(o2.track);
-        if (_opt.tracks.maxReprojections > 0 and t.obs.size() >= _opt.tracks.maxReprojections) {
+        if (_opt.tracks.maxReprojections > 0 && t.obs.size() >= _opt.tracks.maxReprojections) {
           continue;
         }
 
@@ -266,7 +266,7 @@ bool VideoSfMHandler::reprojectMatches(Session& sess, const size_t frameKey, con
             ObservationRef r2(frameKey, obsKey);
             r2.valid = true;
             t.obs.push_back(r2);
-            if (!_opt.ceres.const3d and t.obs.size() >= _opt.tracks.minReprojections) t.valid = true;
+            if (!_opt.ceres.const3d && t.obs.size() >= _opt.tracks.minReprojections) t.valid = true;
 
             return true;
           }
@@ -301,7 +301,7 @@ void VideoSfMHandler::createTracks(Session& sess, const size_t frameKey)
       reprojectMatches(sess, frameKey, obsKey);
 
       // create a new track if no valid track was found
-      if ( !_opt.ceres.const3d and !o.__isset.track )
+      if ( !_opt.ceres.const3d && !o.__isset.track )
       {
         for (gen::ObservationRef& ref : o.matches)
         {
@@ -391,9 +391,9 @@ void VideoSfMHandler::evalTracks(Session& sess, const size_t frameKey)
         countObs++;
 
         for (size_t i = 0; i < t.obs.size(); i++) {
-          if (t.obs[i].frame == (int)frameKey and t.obs[i].obs == (int)oi) {
+          if (t.obs[i].frame == (int)frameKey && t.obs[i].obs == (int)oi) {
             t.obs.erase(t.obs.begin()+i);
-            if (t.valid and t.obs.size() < _opt.tracks.minReprojections) {
+            if (t.valid && t.obs.size() < _opt.tracks.minReprojections) {
               t.valid = false;
               countTrack++;
             }
@@ -404,7 +404,7 @@ void VideoSfMHandler::evalTracks(Session& sess, const size_t frameKey)
     }
   }
 
-  if (countTrack or countObs) {
+  if (countTrack || countObs) {
     cout << countObs << " bad reprojections and " << countTrack << " bad tracks removed" << endl;
   }
 }
@@ -424,7 +424,7 @@ void VideoSfMHandler::solve(const int32_t sessionKey, const int32_t frameKey)
       solveRsPnP(sessionKey, _opt);
     }
 
-    if ((!f.__isset.poses or _opt.ceres.pnpNewFrame) and (uint)frameKey >= _opt.tracks.minReprojections) {
+    if ((!f.__isset.poses || _opt.ceres.pnpNewFrame) && (uint)frameKey >= _opt.tracks.minReprojections) {
       ceres::Solver::Options cOpt;
       cOpt.linear_solver_type = ceres::SPARSE_SCHUR;
       cOpt.minimizer_progress_to_stdout = true;
@@ -515,7 +515,7 @@ void VideoSfMHandler::printFrame(const int32_t sessionKey, const int32_t frameKe
 
   size_t ntracks = 0;
   for (const gen::Observation& o : f.obs) {
-    if (o.__isset.track and sess.getTrack(o.track).valid) ntracks++;
+    if (o.__isset.track && sess.getTrack(o.track).valid) ntracks++;
   }
   cout << "frame " << frameKey << ":  " << ntracks << " valid tracks";
 
@@ -638,7 +638,7 @@ void VideoSfMHandler::cvCorrespondences(const gen::Frame& f, const Session& sess
     if (o.__isset.track) {
       const gen::Track& t = sess.getTrack(o.track);
 
-      if ( (t.valid or !useOnlyValid) and t.__isset.pt) {
+      if ( (t.valid || !useOnlyValid) && t.__isset.pt) {
         pts.push_back(Point3f(t.pt[0], t.pt[1], t.pt[2]));
         obs.push_back(Point2f(o.x, o.y));
         continue; // next observation
@@ -652,7 +652,7 @@ void VideoSfMHandler::cvCorrespondences(const gen::Frame& f, const Session& sess
       if (o2.__isset.track) {
         const gen::Track& t = sess.getTrack(o2.track);
 
-        if ( (t.valid or !useOnlyValid) and t.__isset.pt) {
+        if ( (t.valid || !useOnlyValid) && t.__isset.pt) {
           pts.push_back(Point3f(t.pt[0], t.pt[1], t.pt[2]));
           obs.push_back(Point2f(o.x, o.y));
           break; // next observation
@@ -694,7 +694,7 @@ bool VideoSfMHandler::solveRsPnP(const int32_t sessionKey, const SfmOptions& opt
     if (f.__isset.priorPoses) {
       f.poses = f.priorPoses;
     }
-    else if (_opt.mod_init.reuseLastPose and frameKey > 0) {
+    else if (_opt.mod_init.reuseLastPose && frameKey > 0) {
       vector<double> pose;
       if (f.poses.size() > 1) {
         pose = f.poses[0];
@@ -734,7 +734,7 @@ bool VideoSfMHandler::solveRsPnP(const int32_t sessionKey, const SfmOptions& opt
 
     cv::Vec3d rvec2(rvec.val), tvec2(tvec.val);
 
-    if (_opt.model.rolling_shutter and  _opt.mod_init.solveRsPnP) {
+    if (_opt.model.rolling_shutter &&  _opt.mod_init.solveRsPnP) {
       std::cout << "solveRsPnP" << endl;
       solveRsPnPRansac(pts, obs, K, distcoeff,
           rvec, tvec, rvec2, tvec2,
@@ -745,7 +745,7 @@ bool VideoSfMHandler::solveRsPnP(const int32_t sessionKey, const SfmOptions& opt
       std::cout << rvec2 << tvec2 << endl;
     }
 
-    if (inliers.rows > 4 or ( !_opt.mod_init.solveGsPnP and !_opt.mod_init.solveRsPnP ) ) {
+    if (inliers.rows > 4 || ( !_opt.mod_init.solveGsPnP && !_opt.mod_init.solveRsPnP ) ) {
       std::cout << inliers.rows << " PnP inliers found" << endl;
 
       vector<double> pose(NUM_POSE_PARAMS);

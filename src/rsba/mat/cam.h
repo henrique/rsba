@@ -4,6 +4,7 @@
 
 #include <ceres/ceres.h>
 #include <ceres/rotation.h>
+#include <cfloat>
 #include "rsba/mat/eigenTypes.h"
 #include "rsba/mat/core.h"
 
