@@ -44,6 +44,7 @@ set(SFM_THRIFT_SRC
   gen-cpp/sfm_constants.cpp
   gen-cpp/sfm_types.cpp
   gen-cpp/VideoSfM.cpp
+  struct/md5.cpp
   struct/VideoSfMCache.cc
   struct/VideoSfM.cc
 )
@@ -53,7 +54,6 @@ target_link_libraries(sfm_thrift
   ${OpenCV_LIBS} ${OPENCV_DEBUG_LIBS}
   ${THRIFT_LIBRARIES}
   ${CERES_INCLUDE_DIRS}
-  ssl
   crypto
 )
 
