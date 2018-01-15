@@ -7,6 +7,8 @@
 #include <iostream>
 #ifndef _WIN32
 #include <unistd.h>
+#else
+#include <winbase.h>
 #endif
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -78,7 +80,15 @@ protected:
   }
 
   inline bool fexists(const std::string& name) {
+#ifdef _WIN32
+  if(INVALID_FILE_ATTRIBUTES == GetFileAttributes(name) && GetLastError()==ERROR_FILE_NOT_FOUND)
+  {
+      return false;
+  }
+  return true;
+#else
     return ( access( name.c_str(), F_OK ) != -1 );
+#endif
   }
 
   std::string Mat2str(const cv::Mat& src);
