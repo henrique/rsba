@@ -35,7 +35,7 @@ inline bool inv33(const T M[9], T Minv[9]) {
   ceres::MatrixAdapter<T, 1, 3> minv(Minv);
 
   T d = det33(M);
-  if (d < T(_EPS) and d > T(-_EPS)) return false;
+  if (d < T(_EPS) && d > T(-_EPS)) return false;
 
   minv(0, 0) = (m(1, 1) * m(2, 2) - m(2, 1) * m(1, 2)) / d;
   minv(0, 1) = (m(0, 2) * m(2, 1) - m(0, 1) * m(2, 2)) / d;
