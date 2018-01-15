@@ -72,7 +72,7 @@ struct RsBA: public ReprojectionError {
     residuals[1] = (proj[1] - T(observed_y));
 
     T threshold(5);
-    if (abs(residuals[0]) < threshold and abs(residuals[1]) < threshold) {
+    if (abs(residuals[0]) < threshold && abs(residuals[1]) < threshold) {
       return true;
     } else { //TODO check matches
       return true;
