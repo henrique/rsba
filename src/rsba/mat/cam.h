@@ -168,7 +168,7 @@ bool direction(const T cam[NUM_CAM_PARAMS],
   d[1] = (y0 - cam[CAM_CENTER_Y])/cam[CAM_FOCAL_Y];
   d[2] = T(1);
 
-  if (!undistort(cam, d, d) and validate) {
+  if (!undistort(cam, d, d) ||  validate) {
     return false;
   } //else keep original point
 
@@ -333,7 +333,7 @@ void interpolate_rs(const T pose0[6], const T pose1[6],
 
 #ifndef NDEBUG
     if (tau<T(0) or tau>T(1)) {
-      if (sizeof(tau) == 8 and obs[0] != obs[1]) {
+      if (sizeof(tau) == 8 && obs[0] != obs[1]) {
         cerr << "Tau out of bounds! " << obs[0] << ":" << obs[1] << " t" << tau << endl;
       }
     }
@@ -374,7 +374,7 @@ inline bool c2i(const T cam[NUM_CAM_PARAMS], //focal length + distortion
                 const T pt[3],
                 T projection[2])
 {
-  if (pt[2] < T(_EPS) and pt[2] > T(-_EPS)) { // non-zero
+  if (pt[2] < T(_EPS) && pt[2] > T(-_EPS)) { // non-zero
       return false;
   }
 
@@ -554,7 +554,7 @@ bool rayDist(const T cam[NUM_CAM_PARAMS], const T pose[NUM_POSE_PARAMS], const T
     T& b = len[2];
     scalar3(p2, b, dist);
 
-    //if (l > T(0) and k > T(0)) // in front of the camera
+    //if (l > T(0) && k > T(0)) // in front of the camera
     {
       T s1[3] = { l*d1[0], l*d1[1], l*d1[2] };
       T s2[3] = { p2[0] + k*d2[0], p2[1] + k*d2[1], p2[2] + k*d2[2] };
