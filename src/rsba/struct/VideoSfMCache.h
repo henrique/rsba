@@ -81,7 +81,7 @@ protected:
 
   inline bool fexists(const std::string& name) {
 #ifdef _WIN32
-  if(INVALID_FILE_ATTRIBUTES == GetFileAttributes(name) && GetLastError()==ERROR_FILE_NOT_FOUND)
+  if(INVALID_FILE_ATTRIBUTES == GetFileAttributes(name.c_str()) && GetLastError()==ERROR_FILE_NOT_FOUND)
   {
       return false;
   }
