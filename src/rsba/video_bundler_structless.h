@@ -4,7 +4,6 @@
 #include <cmath>
 #include <cstdio>
 #include <iostream>
-#include <thread>
 #include <string.h>
 #include <ceres/ceres.h>
 #include <ceres/rotation.h>

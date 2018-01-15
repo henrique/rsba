@@ -5,8 +5,12 @@ IF (BUILD_TESTING)
   add_subdirectory(test)
 ENDIF()
 
+IF (FORCE_STATIC)
+	ADD_LIBRARY(thrift STATIC IMPORTED)
+	SET_TARGET_PROPERTIES(thrift PROPERTIES IMPORTED_LOCATION ${LIBDIR}/libthrift.a)
+ENDIF()
 
-
+find_package( OpenCV REQUIRED )
 
 # sfm thrift
 set(SFM_THRIFT_SRC
@@ -45,7 +49,6 @@ target_link_libraries(VideoSfm
   opencv_core
   ceres
   spqr
-  glog
   pthread
   gomp
   cholmod

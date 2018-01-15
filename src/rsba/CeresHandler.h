@@ -5,6 +5,7 @@
 #include <ceres/rotation.h>
 #include <Eigen/Core>
 #include <cstddef>
+#include <thread>
 
 #include "rsba/mat/cam.h"
 #include "rsba/struct/VideoSfM.h"

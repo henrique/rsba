@@ -4,7 +4,6 @@
 #include <cmath>
 #include <cstdio>
 #include <iostream>
-#include <thread>
 
 #include "rsba/ceres/ceres.h"
 #include "rsba/ceres/rotation.h"
