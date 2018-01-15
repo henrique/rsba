@@ -11,7 +11,8 @@
 #else
 #define __OPENCV_BUILD
 #include <opencv2/cvconfig.h>
-#include <opencv2/core/private.hpp>
+#include <opencv2/core/utility.hpp>
+#define BlockedRange Range
 #endif
 #include <iostream>
 //#include <boost/timer/timer.hpp>
@@ -341,7 +342,11 @@ namespace vision
             {
                 vector<char> pointsMask(objectPoints.cols, 0);
                 memset(&pointsMask[0], 1, parameters.min_points_count );
+#if (defined(CV_VERSION_EPOCH) && CV_VERSION_EPOCH == 2)
                 for( int i=r.begin(); i!=r.end(); ++i )
+#else
+                for( int i=r.start; i!=r.end; ++i )
+#endif
                 {
                     generateVar(pointsMask);
                     pnpTask(pointsMask, objectPoints, imagePoints, parameters,
@@ -478,7 +483,11 @@ void vision::solveRsPnPRansac(InputArray _opoints, InputArray _ipoints,
 
     if (objectPoints.cols >= params.min_points_count)
     {
+#if (defined(CV_VERSION_EPOCH) && CV_VERSION_EPOCH == 2)
         cv::parallel_for(BlockedRange(0,iterationsCount),
+#else
+        cv::parallel_for_(Range(0,iterationsCount),
+#endif
             pnpransac::PnPSolver(objectPoints, imagePoints, params,
                 localRvec, localTvec, localRvec2, localTvec2, localInliers));
     }
