@@ -10,6 +10,9 @@
 #include <vector>
 #include <iostream>
 #include <sys/stat.h>
+#ifdef _WIN32
+#include <direct.h>
+#endif
 
 using namespace std;
 
@@ -166,7 +169,7 @@ void writePly(const string& file,
   if (write_points) {
     for (const gen::Track& t : sess.tracks)
     {
-      if ( useOnlyValid && (!t.valid or !inView(sess, t)) ) continue;
+      if ( useOnlyValid && (!t.valid || !inView(sess, t)) ) continue;
 
       uchar rgb[3] = { (uchar)t.color[0], (uchar)t.color[1], (uchar)t.color[2] };
 

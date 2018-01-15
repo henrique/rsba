@@ -5,7 +5,9 @@
 #include <stdlib.h>
 #include <string>
 #include <iostream>
+#ifndef _WIN32
 #include <unistd.h>
+#endif
 #include <fcntl.h>
 #include <sys/stat.h>
 
