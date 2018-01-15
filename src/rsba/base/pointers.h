@@ -1,6 +1,15 @@
 #ifndef _pointers_h
 #define _pointers_h
 
+#ifdef _WIN32
+#include <memory>
+using ::std::unique_ptr;
+using ::std::shared_ptr;
+using ::std::weak_ptr;
+using ::std::make_shared;
+
+#else
+
 #if __cplusplus < 201103L
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
