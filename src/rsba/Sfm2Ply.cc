@@ -77,7 +77,11 @@ void writePly(const string& file,
 {
   if ( ! opt.debug.writePly) return;
 
+#if defined(_WIN32)
+  _mkdir(trg_dir);
+#else
   mkdir(trg_dir, 0777);
+#endif
   string path = (trg_dir + file);
 
   FILE* f = fopen(path.c_str(), "w");
@@ -116,7 +120,7 @@ void writePly(const string& file,
   bool useOnlyValid = false;
   size_t numInvalid = 0, numValid = 0;
   for (const gen::Track& t: sess.tracks) {
-    if (t.valid and inView(sess, t)) {
+    if (t.valid && inView(sess, t)) {
       num_points_out++;
       numValid++;
       useOnlyValid = true;
@@ -162,7 +166,7 @@ void writePly(const string& file,
   if (write_points) {
     for (const gen::Track& t : sess.tracks)
     {
-      if ( useOnlyValid and (!t.valid or !inView(sess, t)) ) continue;
+      if ( useOnlyValid && (!t.valid or !inView(sess, t)) ) continue;
 
       uchar rgb[3] = { (uchar)t.color[0], (uchar)t.color[1], (uchar)t.color[2] };
 
