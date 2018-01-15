@@ -74,7 +74,7 @@ struct LifeTriangulation {
   }
 
   template <typename T>
-  bool operator()(const T* const camera, //focal length + 2nd and 4th distortion
+  bool operator()(const T* const camera, //focal length + 2nd && 4th distortion
                   const T* const pose,
                   const T* const pose2,
                   T* residuals) const
@@ -84,8 +84,8 @@ struct LifeTriangulation {
 
     T point[3], img[2], img2[2];
     if (triangulate(camera, pose, obs, camera, pose2, obs2, point)
-        and w2i(camera, pose, point, img, false)
-        and w2i(camera, pose2, point, img2, false)) {
+        && w2i(camera, pose, point, img, false)
+        && w2i(camera, pose2, point, img2, false)) {
       residuals[0] = img[0] - obs[0];
       residuals[1] = img[1] - obs[1];
       residuals[2] = img2[0] - obs2[0];
