@@ -7,6 +7,7 @@
 #ifndef VideoSfM_H
 #define VideoSfM_H
 
+#define GLOG_NO_ABBREVIATED_SEVERITIES
 #include <thrift/TDispatchProcessor.h>
 #include <thrift/async/TConcurrentClientSyncInfo.h>
 #include "sfm_types.h"
