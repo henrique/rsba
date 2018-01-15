@@ -125,7 +125,7 @@ class CeresHandler {
             pose[5] += 1e-4;
           }
 
-          if (frameKey == 1 and originFrame) {
+          if (frameKey == 1 && originFrame) {
             ceres::CostFunction* costFunction = SphericalPrior::Create();
             problem.AddResidualBlock(costFunction, nullptr, f.poses[0].data());
           }
@@ -146,10 +146,10 @@ class CeresHandler {
 
     // add priors
     if (frameKey >= opt.ceres.fixFirstNCameras) {
-      if (frameKey > 0 and (opt.ceres.constFrameVelocity != 0 or opt.ceres.constFrameAcceleration != 0)) {
+      if (frameKey > 0 && (opt.ceres.constFrameVelocity != 0 || opt.ceres.constFrameAcceleration != 0)) {
         gen::Frame& f_1 = sess.frames[frameKey - 1];
 
-        if (f.poses.size() == 2 and f_1.poses.size() == 2) {
+        if (f.poses.size() == 2 && f_1.poses.size() == 2) {
           if (opt.ceres.constFrameAcceleration != 0) {
             ceres::CostFunction* costFunction = RsConstAccelerationPrior::Create(opt.ceres.constFrameAcceleration);
             problem.AddResidualBlock(costFunction,
@@ -186,11 +186,11 @@ class CeresHandler {
         }
       }
 
-      if (opt.ceres.trustPriorCamRotation or opt.ceres.trustPriorCamPosition) {
+      if (opt.ceres.trustPriorCamRotation || opt.ceres.trustPriorCamPosition) {
 
-        if (f.__isset.priorPoses and f.priorPoses.size() > 0) {
+        if (f.__isset.priorPoses && f.priorPoses.size() > 0) {
 
-          if ( !f.__isset.poses or f.poses.size() != f.priorPoses.size()) {
+          if ( !f.__isset.poses || f.poses.size() != f.priorPoses.size()) {
             f.poses = f.priorPoses;
           }
 
@@ -215,10 +215,10 @@ class CeresHandler {
 
         if (o.__isset.track) {
           t = &sess.getTrack(o.track);
-          if (!t->__isset.pt or (opt.ceres.useOnlyValidMatches and !t->valid)) t = nullptr;
+          if (!t->__isset.pt || (opt.ceres.useOnlyValidMatches && !t->valid)) t = nullptr;
         }
 
-        if (!t and (uninitialized or !opt.ceres.useOnlyValidMatches)) { // also add bad reprojections
+        if (!t && (uninitialized || !opt.ceres.useOnlyValidMatches)) { // also add bad reprojections
           for (gen::ObservationRef& ref: o.matches) {
             const gen::Frame& f2 = sess.frames[ref.frame];
             const gen::Observation& o2 = f2.obs[ref.obs];
@@ -227,8 +227,8 @@ class CeresHandler {
               t = &sess.getTrack(o2.track);
 
               if (!t->__isset.pt
-                  or (opt.ceres.useOnlyValidMatches and !t->valid)
-                  or !validate(sess, f, opt, t->pt.data(), obs)) {
+                  || (opt.ceres.useOnlyValidMatches && !t->valid)
+                  || !validate(sess, f, opt, t->pt.data(), obs)) {
                 t = nullptr;
               }
               else break; // found!
@@ -236,7 +236,7 @@ class CeresHandler {
           }
         }
 
-        if (t and (t->valid or !opt.ceres.useOnlyValidMatches)) {
+        if (t && (t->valid || !opt.ceres.useOnlyValidMatches)) {
           if (opt.ceres.revalidateReprojections) {
             if ( ! validate(sess, f, opt, t->pt.data(), obs)) {
               continue; // skip observation
@@ -282,7 +282,7 @@ class CeresHandler {
 
             if (frameKey < opt.ceres.fixFirstNCameras) { // fix first cameras
               problem.SetParameterBlockConstant(getPose(sess, f, opt, obs));
-              if ( !opt.model.calibrated and f.__isset.cam) problem.SetParameterBlockConstant(f.cam.data());
+              if ( !opt.model.calibrated && f.__isset.cam) problem.SetParameterBlockConstant(f.cam.data());
             }
           }
 
@@ -296,7 +296,7 @@ class CeresHandler {
             }
           }
 
-          if (fixedOldTrack or opt.ceres.const3d) {
+          if (fixedOldTrack || opt.ceres.const3d) {
             problem.SetParameterBlockConstant(t->pt.data());
           }
         }
@@ -327,14 +327,14 @@ class CeresHandler {
 
           if ((size_t)ref.frame < opt.ceres.fixFirstNCameras) { // fix first cameras
             problem.SetParameterBlockConstant(f2.poses[0].data());
-            //if ( !opt.model.calibrated and f2.__isset.cam) problem.SetParameterBlockConstant(f2.cam.data());
+            //if ( !opt.model.calibrated && f2.__isset.cam) problem.SetParameterBlockConstant(f2.cam.data());
           }
         }
       }
     }
 
     if (problem.NumParameterBlocks() > formerParamNum) {
-//      if (frameKey == 1 and !opt.model.use3Dpoints) {
+//      if (frameKey == 1 && !opt.model.use3Dpoints) {
 //        ceres::LocalParameterization* parameterization = new ceres::AutoDiffLocalParameterization<SphericalPlus, NUM_POSE_PARAMS, NUM_POSE_PARAMS>();
 //        for (auto& pose: f.poses)
 //          problem.SetParameterization(pose.data(), parameterization);
@@ -345,10 +345,10 @@ class CeresHandler {
           problem.SetParameterBlockConstant(f.poses[0].data());
           problem.SetParameterBlockConstant(f.poses[1].data());
         } // else already constant
-        if ( !opt.model.calibrated and f.__isset.cam) problem.SetParameterBlockConstant(f.cam.data());
+        if ( !opt.model.calibrated && f.__isset.cam) problem.SetParameterBlockConstant(f.cam.data());
       }
-      // fix first and last camera position to constrain scale changes
-      else if (opt.ceres.fixScale and (frameKey == 0 or frameKey == sess.frames.size()-1) ) {
+      // fix first && last camera position to constrain scale changes
+      else if (opt.ceres.fixScale && (frameKey == 0 || frameKey == sess.frames.size()-1) ) {
         vector<int> constant(3);
         constant[0] = 3;
         constant[1] = 4;
@@ -417,7 +417,7 @@ class CeresHandler {
     ceres::Solver::Summary summary;
     ceres::Solve(*options, &problem, &summary);
 
-    if (opt.ceres.constFrameVelocity != 0 or opt.ceres.constFrameAcceleration != 0) {
+    if (opt.ceres.constFrameVelocity != 0 || opt.ceres.constFrameAcceleration != 0) {
       cout << "interFrameRatio: " << opt.ceres.interFrameRatio << endl;
     }
 
