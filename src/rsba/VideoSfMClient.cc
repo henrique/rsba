@@ -10,7 +10,6 @@
 #include <iomanip>
 #include <iostream>
 #include <stdexcept>
-#include <openssl/md5.h>
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/video/tracking.hpp>
@@ -149,7 +148,7 @@ size_t VideoSfMClient::addFrame(const cv::Mat& inFrame, cv::Mat& outFrame)
   parseFrame(inFrame, outFrame, frameKey);
   processFrame(frameKey);
 
-  if (opt.debug.showTracks or opt.debug.showLastMatches > 0) {
+  if (opt.debug.showTracks || opt.debug.showLastMatches > 0) {
     showObservations(frameKey, outFrame);
   }
 
@@ -174,7 +173,7 @@ bool VideoSfMClient::parseFrame(const cv::Mat& inFrame, cv::Mat& outFrame, const
          << setfill('0') << setw(3) << frameKey << ":";
   VideoSfMCache cache("cache/", prefix.str(), inFrame);
 
-  if ( !opt.tracks.cacheMatches or !cache.load(f) )
+  if ( !opt.tracks.cacheMatches || !cache.load(f) )
   {
     if (frameKey != _descriptors.size()) {
       throw runtime_error("Invalid descriptors or outdated caching");
@@ -196,7 +195,7 @@ bool VideoSfMClient::parseFrame(const cv::Mat& inFrame, cv::Mat& outFrame, const
       f.__isset.obs = true;
       //TODO load/cache descriptors
 
-      for (size_t i = 1; i < _descriptors.size() and i <= frameKey and i <= opt.tracks.maxFramesToMatch; i++) {
+      for (size_t i = 1; i < _descriptors.size() && i <= frameKey && i <= opt.tracks.maxFramesToMatch; i++) {
         cout << "matching frame " << frameKey-i << endl;
         vector<DMatch> matches = Match(_descriptors[frameKey], _descriptors[frameKey-i], _keypoints[frameKey], _keypoints[frameKey-i]);
         cout << matches.size() << " matches found" << endl;
@@ -241,8 +240,8 @@ void VideoSfMClient::processFrame(const size_t frameKey)
   // get track info
   handler->getFrame(frames[frameKey], authToken, sessionKey, frameKey);
 
-  if (opt.ceres.baIterationsOnNewFrame > 0 and frameKey+1 >= opt.tracks.minReprojections) { // improve solution
-    if (opt.ceres.baWindowOnNewFrame and frameKey >= opt.ceres.baWindowOnNewFrame) {
+  if (opt.ceres.baIterationsOnNewFrame > 0 && frameKey+1 >= opt.tracks.minReprojections) { // improve solution
+    if (opt.ceres.baWindowOnNewFrame && frameKey >= opt.ceres.baWindowOnNewFrame) {
       handler->windowedBA(authToken, sessionKey, (1 + frameKey - opt.ceres.baWindowOnNewFrame), frameKey, opt.ceres.baIterationsOnNewFrame, true);
     } else {
       handler->windowedBA(authToken, sessionKey, 0, frameKey, opt.ceres.baIterationsOnNewFrame, true);
@@ -289,7 +288,7 @@ void VideoSfMClient::showObservations(const size_t frameKey, Mat& outFrame, bool
       }
     }
 
-    if (obs.__isset.track and tracks.size() > (size_t)obs.track) {
+    if (obs.__isset.track && tracks.size() > (size_t)obs.track) {
       const gen::Track& t = getTrack(obs.track);
       if ( ! t.__isset.pt) continue;
 

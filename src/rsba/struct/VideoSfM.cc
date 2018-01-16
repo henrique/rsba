@@ -148,7 +148,7 @@ bool reproject(const gen::Session& sess, const gen::Frame& f, const SfmOptions& 
     getPose(sess, f, opt, proj, pose);
     if (!w2i(cam, pose, pt, proj, true)) return false;
     minus2(proj0, proj, proj0);
-  } while (f.poses.size() > 1 and proj0[0] * proj0[0] + proj0[1] * proj0[1] > 1e-6);
+  } while (f.poses.size() > 1 && proj0[0] * proj0[0] + proj0[1] * proj0[1] > 1e-6);
 
   assign<2>(proj, obs);
   return ::vision::validate(cam, pose, obs, pt, opt.tracks.sqrdThreshold);
@@ -165,7 +165,7 @@ bool validate(const gen::Session& sess, const gen::Frame& f, const SfmOptions& o
   minus3(pose+3, pt, dist);
 
   return norm3(dist) >= opt.tracks.minDistanceToCamera
-      and ::vision::validate(cam, pose, obs, pt, opt.tracks.sqrdThreshold);
+      && ::vision::validate(cam, pose, obs, pt, opt.tracks.sqrdThreshold);
 };
 
 

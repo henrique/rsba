@@ -8,7 +8,9 @@
 #ifndef _WIN32
 #include <unistd.h>
 #else
+#include <io.h>
 #include <winbase.h>
+#include <direct.h>
 #endif
 #include <fcntl.h>
 #include <sys/stat.h>
@@ -50,8 +52,13 @@ public:
       cout << fullpath << " already exists!!! overriding... " << endl;
     }
     cout << "creating: " << fullpath << endl;
+#ifdef _WIN32
+	_mkdir(folder.c_str());
+	_open(fullpath.c_str(), _O_CREAT | _O_TRUNC | _O_WRONLY, 0666); // create file
+#else
     mkdir(folder.c_str(), 0777);
     open(fullpath.c_str(), O_CREAT|O_TRUNC|O_WRONLY, 0666); // create file
+#endif
 
     serialize(obj);
   }
