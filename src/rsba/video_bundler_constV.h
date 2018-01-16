@@ -4,7 +4,6 @@
 #include <cmath>
 #include <cstdio>
 #include <iostream>
-#include <glog/logging.h>
 
 #include "rsba/ceres/ceres.h"
 #include "rsba/ceres/rotation.h"
