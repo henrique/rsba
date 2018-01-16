@@ -84,11 +84,6 @@ struct SfmFlags {
     opt.init.outlier_noise = FLAGS_outlier_noise;
     opt.init.loadDatasetPoses = FLAGS_loadDatasetPoses;
     opt.features2d.name = FLAGS_features2d_name;
-    opt.sift.nfeatures = FLAGS_sift_nfeatures;
-    opt.sift.nOctaveLayers = FLAGS_sift_nOctaveLayers;
-    opt.sift.contrastThreshold = FLAGS_sift_contrastThreshold;
-    opt.sift.edgeThreshold = FLAGS_sift_edgeThreshold;
-    opt.sift.sigma = FLAGS_sift_sigma;
     opt.ceres.const3d = FLAGS_const3d;
     opt.ceres.huberLoss = FLAGS_ba_huberLoss;
     opt.ceres.fixFirstNCameras = FLAGS_fixFirstNCameras;
