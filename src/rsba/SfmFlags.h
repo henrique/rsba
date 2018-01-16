@@ -5,12 +5,7 @@
 #include "rsba/SfmOptions.h"
 #include <gflags/gflags.h>
 
-
-DEFINE_uint64(sift_nfeatures, 0, "SIFT max number of features per frame");
-DEFINE_uint64(sift_nOctaveLayers, 3, "SIFT number of octave layers");
-DEFINE_double(sift_contrastThreshold, 0.04, "SIFT contrast threshold");
-DEFINE_double(sift_edgeThreshold, 6.5, "SIFT edge threshold");
-DEFINE_double(sift_sigma, 1.6, "SIFT sigma");
+DEFINE_string(features2d_name, "ORB", "Features 2D algorithm. Options: ORB, KAZE.");
 
 DEFINE_bool(cacheMatches, false, "save matches under ./cache");
 DEFINE_double(pixel_threshold, 3.0, "Reprojection threshold in pixels");
@@ -88,6 +83,7 @@ struct SfmFlags {
     opt.init.translation_noise = FLAGS_translation_noise;
     opt.init.outlier_noise = FLAGS_outlier_noise;
     opt.init.loadDatasetPoses = FLAGS_loadDatasetPoses;
+    opt.features2d.name = FLAGS_features2d_name;
     opt.sift.nfeatures = FLAGS_sift_nfeatures;
     opt.sift.nOctaveLayers = FLAGS_sift_nOctaveLayers;
     opt.sift.contrastThreshold = FLAGS_sift_contrastThreshold;

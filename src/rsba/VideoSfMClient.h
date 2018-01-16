@@ -6,18 +6,7 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/video/tracking.hpp>
-
-#if (defined(CV_VERSION_EPOCH) && CV_VERSION_EPOCH == 2)
-// nothing
-#else
-#define CV_XFEATURES
-#endif
-
-#ifdef CV_XFEATURES
-#include <opencv2/xfeatures2d/nonfree.hpp>
-#else
-#include <opencv2/nonfree/features2d.hpp>
-#endif
+#include <opencv2/features2d/features2d.hpp>
 
 #include "rsba/base/pointers.h"
 #include "rsba/VideoSfMHandler.h"
@@ -58,17 +47,13 @@ protected:
 
   virtual bool parseFrame(const cv::Mat& inFrame, cv::Mat& outFrame, const size_t frameKey);
   virtual void processFrame(const size_t frameKey);
-
+  virtual void initDetector(void);
 
   SfmOptions opt;
   std::string authToken;
   int sessionKey = -1;
 
-#ifdef CV_XFEATURES
-  cv::Ptr<cv::xfeatures2d::SiftFeatureDetector> _siftDetector;
-#else
-  cv::SiftFeatureDetector _siftDetector;
-#endif
+  cv::Ptr<cv::Feature2D> _featureDetector;
   cv::BFMatcher l2matcher;
 
   shared_ptr<sfm::gen::VideoSfMIf> handler;
