@@ -34,15 +34,9 @@ using namespace vision::sfm;
 
 VideoSfMClient::VideoSfMClient(const SfmOptions& opt)
  : opt(opt),
-#ifdef CV_XFEATURES
-   _siftDetector(cv::xfeatures2d::SIFT::create(
-     opt.sift.nfeatures, opt.sift.nOctaveLayers, opt.sift.contrastThreshold, opt.sift.edgeThreshold, opt.sift.sigma)
-   ),
-#else
-   _siftDetector(opt.sift.nfeatures, opt.sift.nOctaveLayers, opt.sift.contrastThreshold, opt.sift.edgeThreshold, opt.sift.sigma),
-#endif
    handler(new sfm::VideoSfMHandler(opt))
 {
+  this->initDetector();
   if (opt.model.rolling_shutter) {
     scanlines.resize(2);
   }
@@ -52,6 +46,22 @@ VideoSfMClient::VideoSfMClient(const SfmOptions& opt)
 
 VideoSfMClient::~VideoSfMClient() throw ()
 {
+}
+
+
+void VideoSfMClient::initDetector(void) {
+  std::cout << "Init detector: " << opt.features2d.name << std::endl;
+  if (opt.features2d.name == "KAZE") {
+    _featureDetector = cv::KAZE::create();
+  }
+  else if (opt.features2d.name == "ORB") {
+    _featureDetector = cv::ORB::create();
+  }
+  else {
+    std::cout << "Detector not found, falling back to ORB" << std::endl;
+    opt.features2d.name = "ORB";
+    _featureDetector = cv::ORB::create();
+  }
 }
 
 
@@ -159,11 +169,7 @@ bool VideoSfMClient::parseFrame(const cv::Mat& inFrame, cv::Mat& outFrame, const
   prefix.setf(std::ios_base::right);
   prefix << setw(0)
          << inFrame.cols << "x" << inFrame.rows << ":"
-         << opt.sift.nfeatures << ":"
-         << opt.sift.nOctaveLayers << ":"
-         << opt.sift.sigma << ":"
-         << opt.sift.edgeThreshold << ":"
-         << opt.sift.contrastThreshold << ":"
+		 << opt.features2d.name << ":"
          << opt.tracks.maxFramesToMatch << ":"
          << setfill('0') << setw(3) << frameKey << ":";
   VideoSfMCache cache("cache/", prefix.str(), inFrame);
@@ -183,12 +189,8 @@ bool VideoSfMClient::parseFrame(const cv::Mat& inFrame, cv::Mat& outFrame, const
       //DynamicAdaptedFeatureDetector detector(new StarAdjuster(), opt.sift.nfeatures*0.5, opt.sift.nfeatures, 5);
       //PyramidAdaptedFeatureDetector detector(new GFTTDetector(opt.sift.nfeatures), 1);
       //detector.detect(_nextImg, _keypoints[0]);
-#ifdef CV_XFEATURES
-      _siftDetector->detect(_nextImg, _keypoints[frameKey]);
-      _siftDetector->compute(_nextImg, _keypoints[frameKey], _descriptors[frameKey]);
-#else
-      _siftDetector(_nextImg, _mask, _keypoints[frameKey], _descriptors[frameKey]);
-#endif
+      _featureDetector->detect(_nextImg, _keypoints[frameKey]);
+      _featureDetector->compute(_nextImg, _keypoints[frameKey], _descriptors[frameKey]);
       cout << _keypoints[frameKey].size() << " features found" << endl;
       f.obs = convertCV(_keypoints[frameKey], _descriptors[frameKey], inFrame);
       f.__isset.obs = true;

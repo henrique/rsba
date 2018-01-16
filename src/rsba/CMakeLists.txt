@@ -49,11 +49,10 @@ set(SFM_THRIFT_SRC
   struct/VideoSfM.cc
 )
 add_library(sfm_thrift ${SFM_THRIFT_SRC})
-target_include_directories(sfm_thrift PRIVATE ${OpenCV_INCLUDE_DIRS} ${THRIFT_INCLUDE_DIR})
+target_include_directories(sfm_thrift PRIVATE ${OpenCV_INCLUDE_DIRS} ${THRIFT_INCLUDE_DIR} ${CERES_INCLUDE_DIRS})
 target_link_libraries(sfm_thrift
   ${OpenCV_LIBS} ${OPENCV_DEBUG_LIBS}
   ${THRIFT_LIBRARIES}
-  ${CERES_INCLUDE_DIRS}
   crypto
 )
 
@@ -66,6 +65,7 @@ set(SFM_SRC
   Sfm2Ply.cc
 )
 add_library(VideoSfm ${SFM_SRC})
+target_include_directories(VideoSfm PRIVATE ${OpenCV_INCLUDE_DIRS} ${THRIFT_INCLUDE_DIR} ${CERES_INCLUDE_DIRS})
 target_link_libraries(VideoSfm
   sfm_thrift
   opencv_calib3d
