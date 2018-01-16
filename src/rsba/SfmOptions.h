@@ -47,6 +47,10 @@ struct SfmOptions {
     uint minTracksPerFrame = 500; //TODO
   } tracks;
 
+  struct Features2D {
+     std::string name;
+  } features2d;
+
   struct SIFT {
     int nfeatures = 0;
     int nOctaveLayers = 3;

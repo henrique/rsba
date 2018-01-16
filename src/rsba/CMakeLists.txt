@@ -65,7 +65,7 @@ set(SFM_SRC
   Sfm2Ply.cc
 )
 add_library(VideoSfm ${SFM_SRC})
-target_include_directories(VideoSfm ${OpenCV_INCLUDE_DIRS} ${THRIFT_INCLUDE_DIR} ${CERES_INCLUDE_DIRS})
+target_include_directories(VideoSfm PRIVATE ${OpenCV_INCLUDE_DIRS} ${THRIFT_INCLUDE_DIR} ${CERES_INCLUDE_DIRS})
 target_link_libraries(VideoSfm
   sfm_thrift
   opencv_calib3d
