@@ -71,6 +71,6 @@ string VideoSfMCache::hashMat(const cv::Mat& src) {
   char* rawPtr = new char[size];
   memcpy(rawPtr, (char*)src.data, size);
   string retval = str2md5(rawPtr, size);
-  delete rawPtr;
+  delete[] rawPtr;
   return retval;
 }
