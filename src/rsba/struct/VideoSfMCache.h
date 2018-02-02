@@ -80,9 +80,9 @@ protected:
     obj.read(protocol.get());
   }
 
-  char* str2md5(const char* str, int length);
+  string str2md5(const char* str, int length);
 
-  inline char* str2md5(const std::string& str) {
+  inline string str2md5(const std::string& str) {
     return str2md5(str.c_str(), str.length());
   }
 
@@ -98,7 +98,7 @@ protected:
 #endif
   }
 
-  std::string Mat2str(const cv::Mat& src);
+  std::string hashMat(const cv::Mat& src);
 
   const std::string folder;
   const std::string fullpath;

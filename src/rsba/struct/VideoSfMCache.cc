@@ -32,17 +32,17 @@ VideoSfMCache::VideoSfMCache(const std::string& folder, const std::string& fullp
 }
 
 VideoSfMCache::VideoSfMCache(const std::string& folder, const std::string& prefix, const cv::Mat& src)
-: folder(folder), fullpath(folder + prefix + str2md5(Mat2str(src)))
+: folder(folder), fullpath(folder + prefix + hashMat(src))
 {
 }
 
 
 
-char* VideoSfMCache::str2md5(const char *str, int length) {
+string VideoSfMCache::str2md5(const char *str, int length) {
     int n;
     MD5_CTX c;
     unsigned char digest[16];
-    char *out = (char*)malloc(33);
+    char out[33];
 
     MD5_Init(&c);
 
@@ -62,13 +62,13 @@ char* VideoSfMCache::str2md5(const char *str, int length) {
         snprintf(&(out[n*2]), 16*2, "%02x", (unsigned int)digest[n]);
     }
 
-    return out;
+    return string(out);
 }
 
 
-
-string VideoSfMCache::Mat2str(const cv::Mat& src) {
-  char* rawPtr = new char[src.step[0] * src.rows];
-  memcpy(rawPtr, (char*)src.data, src.step[0] * src.rows);
-  return (rawPtr);
+string VideoSfMCache::hashMat(const cv::Mat& src) {
+  int size = src.step[0] * src.rows;
+  char rawPtr[size];
+  memcpy(rawPtr, (char*)src.data, size);
+  return str2md5(rawPtr, size);
 }
