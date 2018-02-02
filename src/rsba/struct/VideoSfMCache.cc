@@ -68,7 +68,9 @@ string VideoSfMCache::str2md5(const char *str, int length) {
 
 string VideoSfMCache::hashMat(const cv::Mat& src) {
   int size = src.step[0] * src.rows;
-  char rawPtr[size];
+  char* rawPtr = new char[size];
   memcpy(rawPtr, (char*)src.data, size);
-  return str2md5(rawPtr, size);
+  string retval = str2md5(rawPtr, size);
+  delete rawPtr;
+  return retval;
 }
